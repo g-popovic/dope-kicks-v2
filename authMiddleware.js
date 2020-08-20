@@ -2,16 +2,14 @@ const { ROLES } = require('./config/data');
 
 function authUser(req, res, next) {
 	if (req.user == null) {
-		res.sendStatus(401);
-		return;
+		return res.sendStatus(401);
 	}
 	next();
 }
 
 function authAdmin(req, res, next) {
-	if (req.user.role !== ROLES.ADMIN) {
-		res.sendStatus(401);
-		return;
+	if (req.user == null || req.user.role !== ROLES.ADMIN) {
+		return res.sendStatus(401);
 	}
 	next();
 }

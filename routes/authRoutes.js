@@ -1,14 +1,37 @@
 const router = require('express').Router();
 const passport = require('passport');
+const bcrypt = require('bcrypt');
+const User = require('../models/userModel');
 
-router.get('/test', (req, res) => {
-	res.send(req.user);
-});
+router.get(
+	'/google',
+	passport.authenticate('google', { scope: ['profile', 'email'] })
+);
 
-router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
-
+// TODO: Experiment with redirecting in React
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-	res.send('u good g');
+	res.send('Successfully authenticated with Google.');
 });
+
+router.post('/register', async (req, res) => {
+	const newUser = new User({
+		username: req.body.username,
+		email: req.body.email,
+		password: await bcrypt.hash(req.body.password, 10)
+	});
+
+	req.login(await newUser.save(), err => {
+		if (err) res.send(err);
+		res.send('Successfully registered.');
+	});
+});
+
+router.post(
+	'/login',
+	passport.authenticate('local', { failureMessage: true }),
+	(req, res) => {
+		res.send('Logged in successfully.');
+	}
+);
 
 module.exports = router;

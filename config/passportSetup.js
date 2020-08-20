@@ -27,9 +27,10 @@ passport.use(
 					username: profile.displayName,
 					googleId: profile.id
 				}).save();
+				done(null, newUser);
 			} else {
 				// Log user in
-				console.log('Found user: ', user);
+				done(null, user);
 			}
 		}
 	)

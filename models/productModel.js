@@ -5,7 +5,7 @@ const productSchema = new mongoose.Schema({
 	price: Number,
 	category: String,
 	imagePath: String,
-	default: { type: Boolean, default: false }
+	isDefault: { type: Boolean, default: false }
 });
 
 const Product = mongoose.model('Product', productSchema);

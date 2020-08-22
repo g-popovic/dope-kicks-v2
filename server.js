@@ -7,12 +7,14 @@ const passport = require('passport');
 
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
+const adminStatsRoutes = require('./routes/adminStatsRoutes');
 require('./config/passportSetup');
 
 const app = express();
 
 // Set up middleware
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(
 	session({
 		secret: process.env.SESSION_SECRET,
@@ -38,6 +40,7 @@ mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
 // Connect to routers
 app.use('/products', productRoutes);
 app.use('/auth', authRoutes);
+app.use('/admin', adminStatsRoutes);
 
 app.listen(5000, () => {
 	console.log('Server running on port 5000');

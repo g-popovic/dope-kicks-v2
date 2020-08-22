@@ -8,8 +8,10 @@ function authUser(req, res, next) {
 }
 
 function authAdmin(req, res, next) {
-	if (req.user == null || req.user.role !== ROLES.ADMIN) {
+	if (req.user == null) {
 		return res.sendStatus(401);
+	} else if (req.user.role !== ROLES.ADMIN) {
+		return res.sendStatus(403);
 	}
 	next();
 }

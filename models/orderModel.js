@@ -1,9 +1,17 @@
 const mongoose = require('mongoose');
 
+const orderedProductSchema = new mongoose.Schema(
+	{
+		product: { type: mongoose.Types.ObjectId, ref: 'Product' },
+		amount: Number
+	},
+	{ _id: false }
+);
+
 const orderSchema = new mongoose.Schema(
 	{
-		products: [{ productId: String, productCount: Number }],
-		buyerId: String
+		products: [orderedProductSchema],
+		buyerId: { type: mongoose.Types.ObjectId, ref: 'User' } // TODO: Change 'buyerId' to 'buyer'
 	},
 	{ timestamps: true }
 );

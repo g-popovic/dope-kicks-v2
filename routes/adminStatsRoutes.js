@@ -26,10 +26,10 @@ router.get('/bestsellers', async (req, res) => {
 	const allProductSales = {};
 	orders.forEach(order => {
 		order.products.forEach(product => {
-			productId = String(product.productId);
+			productId = String(product.product);
 			allProductSales[productId] = allProductSales[productId]
-				? allProductSales[productId] + product.productCount
-				: product.productCount;
+				? allProductSales[productId] + product.amount
+				: product.amount;
 		});
 	});
 

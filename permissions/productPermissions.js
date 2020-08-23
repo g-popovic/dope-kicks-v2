@@ -1,5 +1,5 @@
 function canEditOrDeleteProduct(product) {
-	return product.isDefault;
+	return !product.isDefault;
 }
 
 module.exports = {

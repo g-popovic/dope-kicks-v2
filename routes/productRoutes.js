@@ -3,13 +3,14 @@ const Product = require('../models/productModel');
 const Order = require('../models/orderModel');
 const { authUser, authAdmin } = require('../authMiddleware');
 const { canEditOrDeleteProduct } = require('../permissions/productPermissions');
-const mongoose = require('mongoose');
 
 // TODO: Purgatate into pages
 router.get('/', (req, res) => {
-	const category = req.query.category;
-	const query = req.query.query;
-	Product.find().then(result => res.send(result));
+	const category = new RegExp(escapeRegex(req.query.category), 'gi');
+	const query = new RegExp(escapeRegex(req.query.query), 'gi');
+	Product.find({ category: category, name: query }).then(result =>
+		res.send(result)
+	);
 });
 
 router.get('/test', async (req, res) => {
@@ -44,9 +45,30 @@ router.post('/new-product', authAdmin, (req, res) => {
 	newProduct.save().then(result => res.send('Product added!'));
 });
 
-router.patch('/:productId', authAdmin, authEditOrDeleteProduct, (req, res) => {
-	// Product.findByIdAndUpdate(req.product.)
-});
+router.patch(
+	'/:productId',
+	// authAdmin,
+	setProduct,
+	authEditOrDeleteProduct,
+	(req, res) => {
+		const [name, price, category, imagePath] = [
+			req.body.name,
+			req.body.price,
+			req.body.category,
+			req.body.imagePath
+		];
+		if (!name || !price || !category || !imagePath) return res.sendStatus(400);
+
+		Product.findByIdAndUpdate(req.product.id, {
+			name: name,
+			price: price,
+			category: category,
+			imagePath: imagePath
+		})
+			.then(() => res.send('Updated product.'))
+			.catch(e => res.send(e));
+	}
+);
 
 router.delete(
 	'/:productId',
@@ -80,9 +102,16 @@ function setProduct(req, res, next) {
 		.catch(e => res.sendStatus(404));
 }
 
+// Determine of the authenticated user has authorization to edit or delete the product
 function authEditOrDeleteProduct(req, res, next) {
 	if (!canEditOrDeleteProduct(req.product)) return res.sendStatus(403);
 	next();
+}
+
+// Protection against regex DDoS attacks
+function escapeRegex(text) {
+	if (text == null) text = '';
+	return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 }
 
 module.exports = router;

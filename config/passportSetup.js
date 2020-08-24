@@ -47,8 +47,8 @@ passport.use(
 
 passport.use(
 	new LocalStrategy(
-		{ usernameField: 'email' },
-		async (email, password, done) => {
+		{ usernameField: 'email', passReqToCallback: true },
+		async (req, email, password, done) => {
 			const user = await User.findOne({ email: email });
 
 			if (user) {
@@ -59,10 +59,20 @@ passport.use(
 					// Successful login
 					return done(null, user);
 				} else {
-					return done(null, false, { message: 'Incorrect password.' });
+					return done(
+						null,
+						false,
+						req.flash('message', 'Incorrect password.')
+						// { message: 'Incorrect password.' }
+					);
 				}
 			} else {
-				return done(null, false, { message: 'Incorrect email.' });
+				return done(
+					null,
+					false,
+					req.flash('message', 'Incorrect email.')
+					// { message: 'Incorrect email.' }
+				);
 			}
 		}
 	)

@@ -4,17 +4,27 @@ const Order = require('../models/orderModel');
 const { authUser, authAdmin } = require('../authMiddleware');
 const { canEditOrDeleteProduct } = require('../permissions/productPermissions');
 
-// TODO: Purgatate into pages
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+	const itemsPerPage = 8;
+	const page = parseInt(req.query.page) || 1;
+
+	const startIndex = (page - 1) * itemsPerPage;
+	const endIndex = page * itemsPerPage;
+
+	const result = {};
+
+	// Filter by category or search query, or return everything if there are no queries
 	const category = new RegExp(escapeRegex(req.query.category), 'gi');
 	const query = new RegExp(escapeRegex(req.query.query), 'gi');
-	Product.find({ category: category, name: query })
-		.then(result => res.send(result))
-		.catch(e => res.send(e));
-});
+	result.results = await Product.find({ category: category, name: query })
+		.limit(itemsPerPage)
+		.skip(startIndex)
+		.exec();
 
-router.get('/test', async (req, res) => {
-	res.send('You picked the wrong house fool!');
+	if (startIndex > 0) result.previous = page - 1;
+	if (endIndex < (await Product.countDocuments().exec())) result.next = page + 1;
+
+	res.send(result);
 });
 
 router.post('/buy', authUser, (req, res) => {

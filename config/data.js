@@ -1,5 +1,6 @@
 module.exports = {
 	ROLES: {
+		MASTER: 'master',
 		ADMIN: 'admin',
 		BASIC: 'basic'
 	},

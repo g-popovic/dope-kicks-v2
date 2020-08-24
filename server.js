@@ -39,11 +39,12 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
 
-// Connect to routers
+// Connect to API endpoints
 app.use('/products', productRoutes);
 app.use('/auth', authRoutes);
 app.use('/admin', adminStatsRoutes);
 
-app.listen(5000, () => {
-	console.log('Server running on port 5000');
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+	console.log('Server running on port ' + PORT);
 });

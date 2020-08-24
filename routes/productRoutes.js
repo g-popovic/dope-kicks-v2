@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Product = require('../models/productModel');
 const Order = require('../models/orderModel');
-const { authUser, authAdmin } = require('../authMiddleware');
+const { authUser, authAdmin, authMaster } = require('../authMiddleware');
 const { canEditOrDeleteProduct } = require('../permissions/productPermissions');
 
 router.get('/', async (req, res) => {
@@ -16,7 +16,13 @@ router.get('/', async (req, res) => {
 	// Filter by category or search query, or return everything if there are no queries
 	const category = new RegExp(escapeRegex(req.query.category), 'gi');
 	const query = new RegExp(escapeRegex(req.query.query), 'gi');
-	result.results = await Product.find({ category: category, name: query })
+	const minPrice = req.query.minPrice || 0;
+	const maxPrice = req.query.maxPrice || 1000000000;
+	result.results = await Product.find({
+		category: category,
+		name: query,
+		price: { $gte: minPrice, $lte: maxPrice }
+	})
 		.limit(itemsPerPage)
 		.skip(startIndex)
 		.exec();
@@ -102,6 +108,20 @@ router.delete(
 		res.send('Successfully deleted product.');
 	}
 );
+
+router.post('/new-default-product', authMaster, (req, res) => {
+	const newProduct = new Product({
+		name: req.body.name,
+		price: req.body.price,
+		category: req.body.category,
+		imagePath: req.body.imagePath,
+		isDefault: true
+	});
+	newProduct
+		.save()
+		.then(() => res.send('Product added!'))
+		.catch(e => res.send(e));
+});
 
 function setProduct(req, res, next) {
 	Product.findById(req.params.productId)

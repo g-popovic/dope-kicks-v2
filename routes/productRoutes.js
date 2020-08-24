@@ -8,9 +8,9 @@ const { canEditOrDeleteProduct } = require('../permissions/productPermissions');
 router.get('/', (req, res) => {
 	const category = new RegExp(escapeRegex(req.query.category), 'gi');
 	const query = new RegExp(escapeRegex(req.query.query), 'gi');
-	Product.find({ category: category, name: query }).then(result =>
-		res.send(result)
-	);
+	Product.find({ category: category, name: query })
+		.then(result => res.send(result))
+		.catch(e => res.send(e));
 });
 
 router.get('/test', async (req, res) => {
@@ -42,12 +42,15 @@ router.post('/new-product', authAdmin, (req, res) => {
 		category: req.body.category,
 		imagePath: req.body.imagePath
 	});
-	newProduct.save().then(result => res.send('Product added!'));
+	newProduct
+		.save()
+		.then(() => res.send('Product added!'))
+		.catch(e => res.send(e));
 });
 
 router.patch(
 	'/:productId',
-	// authAdmin,
+	authAdmin,
 	setProduct,
 	authEditOrDeleteProduct,
 	(req, res) => {
@@ -104,7 +107,7 @@ function setProduct(req, res, next) {
 
 // Determine of the authenticated user has authorization to edit or delete the product
 function authEditOrDeleteProduct(req, res, next) {
-	if (!canEditOrDeleteProduct(req.product)) return res.sendStatus(403);
+	if (!canEditOrDeleteProduct(req.product, req.user)) return res.sendStatus(403);
 	next();
 }
 

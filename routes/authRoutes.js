@@ -10,7 +10,8 @@ router.get(
 
 // TODO: Experiment with redirecting in React
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-	res.send('Successfully authenticated with Google.');
+	// res.send('Successfully authenticated with Google.');
+	res.send('<a href="/auth/google">Log in again</a>');
 });
 
 router.post('/register', async (req, res) => {

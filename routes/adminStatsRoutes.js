@@ -1,9 +1,11 @@
 const router = require('express').Router();
+const mongoose = require('mongoose');
+const _ = require('lodash');
+const moment = require('moment');
 const User = require('../models/userModel');
 const Order = require('../models/orderModel');
 const Product = require('../models/productModel');
 const { authAdmin } = require('../authMiddleware');
-const mongoose = require('mongoose');
 
 router.use(authAdmin);
 
@@ -64,6 +66,24 @@ router.get('/bestsellers', async (req, res) => {
 	});
 
 	res.send(result);
+});
+
+router.get('/sales-stats', async (req, res) => {
+	const groupedDates = _.groupBy(await Order.find(), result =>
+		moment(result.createdAt.getTime()).startOf('day').unix()
+	);
+
+	const now = moment(new Date().getTime()).startOf('day');
+	const ordersPerDay = [];
+	for (let i = 0; i < 31; i++) {
+		const currentTimestamp = Math.floor(now / 1000) - i * 24 * 60 * 60;
+		const sales = {};
+		sales[currentTimestamp] = groupedDates[currentTimestamp]
+			? groupedDates[currentTimestamp].length
+			: 0;
+		ordersPerDay.push(sales);
+	}
+	res.send(ordersPerDay);
 });
 
 module.exports = router;

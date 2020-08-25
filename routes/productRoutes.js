@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const Product = require('../models/productModel');
 const Order = require('../models/orderModel');
+const User = require('../models/userModel');
 const { authUser, authAdmin, authMaster } = require('../authMiddleware');
 const { canEditOrDeleteProduct } = require('../permissions/productPermissions');
+const { Mongoose } = require('mongoose');
 
 router.get('/', async (req, res) => {
 	const itemsPerPage = 8;
@@ -33,15 +35,7 @@ router.get('/', async (req, res) => {
 	res.send(result);
 });
 
-router.post('/buy', authUser, (req, res) => {
-	// Check if request.body syntax is correct
-	if (
-		!req.body.products ||
-		!req.body.products[0].product ||
-		!req.body.products[0].amount
-	)
-		return res.sendStatus(400);
-
+router.post('/buy', authUser, verifyProductsSyntax, (req, res) => {
 	new Order({
 		products: req.body.products,
 		buyerId: req.user.id
@@ -49,6 +43,18 @@ router.post('/buy', authUser, (req, res) => {
 		.save()
 		.then(() => res.send('Transaction successful.'))
 		.catch(err => res.send(err));
+});
+
+router.post('/cart', authUser, verifyProductsSyntax, (req, res) => {
+	User.findByIdAndUpdate(req.user.id, { cart: req.body.products })
+		.then(() => res.send('Cart updated.'))
+		.catch(e => res.send(e));
+});
+
+router.post('/cart', authUser, verifyProductsSyntax, (req, res) => {
+	User.findById(req.user.id)
+		.then(user => res.send(user.cart))
+		.catch(e => res.send(e));
 });
 
 router.post('/new-product', authAdmin, (req, res) => {
@@ -145,6 +151,14 @@ function authEditOrDeleteProduct(req, res, next) {
 function escapeRegex(text) {
 	if (text == null) text = '';
 	return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
+
+function verifyProductsSyntax(req, res, next) {
+	const products = req.body.products;
+	if (!products || !products[0].product || !products[0].amount)
+		return res.sendStatus(400);
+
+	next();
 }
 
 module.exports = router;

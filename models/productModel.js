@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
 	description: {
 		type: String,
 		default:
-			'This item does not have a description. If you are an Administrator, you can edit this product and give it a description.'
+			'This item does not have a description. If you have Admin level clearence or above, you can edit this product and give it a description.'
 	},
 	isDefault: { type: Boolean, default: false }
 });

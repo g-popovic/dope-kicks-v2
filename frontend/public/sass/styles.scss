@@ -1,0 +1,76 @@
+@import './_variables';
+
+// Basic Styles
+body {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	color: $textColor;
+}
+
+div {
+	padding: 0;
+	margin: 0;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+
+	li {
+		padding: 0;
+	}
+}
+
+input {
+	border: none;
+	display: block;
+	border-bottom: 1px solid #8d8d8d;
+	padding: 0.4rem 0.8rem;
+}
+
+* {
+	font-size: 1rem;
+	font-family: 'Roboto', sans-serif;
+	color: $textColor;
+
+	&:focus {
+		outline: none;
+	}
+
+	&::placeholder {
+		color: #b8b8b8;
+	}
+}
+
+//Reusable Styles
+.btn-primary {
+	@include btn();
+
+	border: none;
+	background-color: $primaryColor;
+	color: white;
+}
+
+.btn-secondary {
+	@include btn();
+
+	background: none;
+	border: 1px solid #222222;
+	color: #222222;
+}
+
+.btn-category {
+	@include btn();
+
+	font-weight: 400;
+	color: #4b4b4b;
+	background: $lightGray;
+}
+
+.hidden {
+	display: none !important;
+}
+
+@import './_navbar.scss';
+@import './_homePage.scss';

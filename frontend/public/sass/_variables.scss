@@ -1,0 +1,15 @@
+$primaryColor: #26c8fb;
+$textColor: #333333;
+$lightGray: #efefef;
+
+$borderRadius: 8px;
+$btnHeight: 2.6rem;
+
+@mixin btn {
+	border-radius: $borderRadius;
+	font-weight: bold;
+	height: $btnHeight;
+	padding: 0 1.5rem;
+	text-align: center;
+	border: none;
+}

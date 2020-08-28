@@ -43,8 +43,6 @@ function Homepage() {
 				<Product isAdmin={false} canEdit={false} />
 				<Product isAdmin={false} canEdit={false} />
 				<Product isAdmin={false} canEdit={false} />
-				<Product isAdmin={false} canEdit={false} />
-				<Product isAdmin={false} canEdit={false} />
 			</div>
 
 			<div className="page-selection">

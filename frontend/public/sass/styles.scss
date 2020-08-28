@@ -6,6 +6,12 @@ body {
 	padding: 0;
 	text-align: center;
 	color: $textColor;
+	background: #f4f4f4;
+}
+
+button,
+a {
+	cursor: pointer;
 }
 
 div {
@@ -74,3 +80,4 @@ input {
 
 @import './_navbar.scss';
 @import './_homePage.scss';
+@import './_adminPage.scss';

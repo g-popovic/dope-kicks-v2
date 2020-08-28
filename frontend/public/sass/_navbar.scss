@@ -9,3 +9,9 @@ nav {
 	right: 0;
 	z-index: 10;
 }
+
+@media only screen and (min-width: 1000px) {
+	nav {
+		height: 4rem;
+	}
+}

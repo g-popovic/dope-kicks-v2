@@ -4,7 +4,7 @@ import GeneralStatsItem from './GeneralStatsItem';
 function GeneralStats() {
 	return (
 		<div className="general-stats-container">
-			<h1>General Stats</h1>
+			<h1 className="admin-stats-title">General Stats</h1>
 			<ul>
 				<GeneralStatsItem label="Total Users" count={14} />
 				<GeneralStatsItem label="Total Products" count={52} />

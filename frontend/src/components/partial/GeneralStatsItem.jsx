@@ -6,7 +6,7 @@ function GeneralStatsItem(props) {
 			<p className="general-stats-label">
 				{props.label.split(' ')[0]}
 				<br />
-				{props.label.split(' ')[1]}
+				{props.label.split(' ')[1] + ':'}
 			</p>
 			<p className="general-stats-count">{props.count}</p>
 		</li>

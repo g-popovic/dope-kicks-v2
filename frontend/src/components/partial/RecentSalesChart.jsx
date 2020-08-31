@@ -46,17 +46,11 @@ function RecentSalesChart() {
 		chart: {
 			type: 'area',
 			height: 350,
-			zoom: {
-				enabled: false
-			},
+			zoom: { enabled: false },
 			toolbar: false
 		},
-		stroke: {
-			curve: 'straight'
-		},
-		dataLabels: {
-			enabled: false
-		},
+		stroke: { curve: 'straight' },
+		dataLabels: { enabled: false },
 		labels: {},
 		xaxis: {
 			type: 'datetime',
@@ -92,12 +86,6 @@ function RecentSalesChart() {
 			},
 			x: {
 				show: true
-				// formatter: value => {
-				// 	return value;
-				// }
-			},
-			marker: {
-				show: false
 			}
 		}
 	});

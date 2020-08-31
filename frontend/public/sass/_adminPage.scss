@@ -5,6 +5,8 @@
 	background: white;
 	padding-top: 5rem;
 	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
 }
 
 .admin-stats-title {
@@ -13,7 +15,11 @@
 }
 
 .general-stats-container {
-	margin-bottom: 4rem;
+	margin-bottom: 4.5rem;
+
+	.admin-stats-title {
+		margin-bottom: 2rem;
+	}
 
 	ul {
 		display: flex;
@@ -36,11 +42,14 @@
 }
 
 .recent-sales-container {
-	margin: 0 auto;
+	margin: 0 auto 2rem;
 	width: 90%;
 }
 
-.lmao {
-	color: green !important;
-	font-size: 0.6em;
+.bestsellers-chart-container {
+	order: 2;
+}
+
+.admin-right-panel {
+	order: 1;
 }

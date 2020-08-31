@@ -511,6 +511,13 @@ nav {
   padding-top: 5rem;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .admin-stats-title {
@@ -519,7 +526,11 @@ nav {
 }
 
 .general-stats-container {
-  margin-bottom: 4rem;
+  margin-bottom: 4.5rem;
+}
+
+.general-stats-container .admin-stats-title {
+  margin-bottom: 2rem;
 }
 
 .general-stats-container ul {
@@ -546,12 +557,19 @@ nav {
 }
 
 .recent-sales-container {
-  margin: 0 auto;
+  margin: 0 auto 2rem;
   width: 90%;
 }
 
-.lmao {
-  color: green !important;
-  font-size: 0.6em;
+.bestsellers-chart-container {
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+}
+
+.admin-right-panel {
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
 }
 /*# sourceMappingURL=styles.css.map */

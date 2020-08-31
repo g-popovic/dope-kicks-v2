@@ -6,7 +6,7 @@ import GeneralStats from './partial/GeneralStats';
 function AdminPage() {
 	return (
 		<div className="admin-page-container">
-			<div className="admin-left-panel">{/* <BestsellersChart /> */}</div>
+			<BestsellersChart />
 			<div className="admin-right-panel">
 				<GeneralStats />
 				<RecentSalesChart />

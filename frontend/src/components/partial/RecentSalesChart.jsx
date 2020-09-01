@@ -45,7 +45,6 @@ function RecentSalesChart() {
 	const [options, setOptions] = useState({
 		chart: {
 			type: 'area',
-			height: 350,
 			zoom: { enabled: false },
 			toolbar: false
 		},
@@ -93,7 +92,7 @@ function RecentSalesChart() {
 	return (
 		<div className="recent-sales-container">
 			<h1 className="admin-stats-title">Sales Last 30 Days</h1>
-			<Chart options={options} series={series} type="area" />
+			<Chart options={options} series={series} height="90%" type="area" />
 		</div>
 	);
 }

@@ -572,4 +572,72 @@ nav {
       -ms-flex-order: 1;
           order: 1;
 }
+
+@media only screen and (min-width: 1000px) {
+  .admin-page-container {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    height: 100vh;
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    padding-top: 7rem;
+  }
+  .bestsellers-chart-container {
+    -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+            order: 1;
+    -ms-flex-preferred-size: 40%;
+        flex-basis: 40%;
+    margin-bottom: 0;
+    height: 95%;
+  }
+  .bestsellers-chart-container h1 {
+    margin: 0;
+    height: 10%;
+  }
+  .admin-right-panel {
+    -webkit-box-ordinal-group: 3;
+        -ms-flex-order: 2;
+            order: 2;
+    -ms-flex-preferred-size: 60%;
+        flex-basis: 60%;
+    height: 95%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .general-stats-container {
+    height: 33%;
+    margin-bottom: 0;
+  }
+  .general-stats-container ul {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .general-stats-container ul li {
+    margin: 0 3rem;
+  }
+  .recent-sales-container {
+    margin-bottom: 0.5rem;
+    height: 66%;
+  }
+  .recent-sales-container .admin-stats-title {
+    height: 10%;
+    margin: 0;
+  }
+}
 /*# sourceMappingURL=styles.css.map */

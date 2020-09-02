@@ -56,6 +56,14 @@ input {
 	border: none;
 	background-color: $primaryColor;
 	color: white;
+
+	&:hover {
+		background-color: #24add6;
+	}
+
+	&:active {
+		background-color: $primaryColor;
+	}
 }
 
 .btn-secondary {
@@ -78,6 +86,21 @@ input {
 	display: none !important;
 }
 
+.hide-mobile {
+	display: none;
+}
+
+@media only screen and (min-width: $breakpointDesktop) {
+	.hide-desktop {
+		display: none;
+	}
+
+	.hide-mobile {
+		display: block;
+	}
+}
+
 @import './_navbar.scss';
 @import './_homePage.scss';
 @import './_adminPage.scss';
+@import './_productPage.scss';

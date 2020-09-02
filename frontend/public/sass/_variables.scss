@@ -4,6 +4,9 @@ $lightGray: #efefef;
 
 $borderRadius: 8px;
 $btnHeight: 2.6rem;
+$navMobileHeight: 3rem;
+
+$breakpointDesktop: 1000px;
 
 @mixin btn {
 	border-radius: $borderRadius;
@@ -12,6 +15,7 @@ $btnHeight: 2.6rem;
 	padding: 0 1.5rem;
 	text-align: center;
 	border: none;
+	font-size: 1.05rem;
 
 	@media only screen and (min-width: 1000px) {
 		height: $btnHeight - 0.5rem;

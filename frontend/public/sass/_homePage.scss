@@ -128,68 +128,84 @@
 		margin: 0 0 1.5rem;
 	}
 
-	.product-image {
-		width: 100%;
-		border-radius: $borderRadius;
-	}
-
-	span {
-		display: flex;
-		align-items: center;
-	}
-
 	.btn-primary {
 		flex: 1;
 	}
+}
 
-	.btn-edit {
-		@include btn();
-		padding: 0;
-		width: $btnHeight;
-		margin-left: 0.8rem;
-		background-color: #8d8d8d;
+.product-buttons-container {
+	display: flex;
+	align-items: center;
+}
 
-		display: flex;
-		align-items: center;
+.product-image {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
 
-		img {
-			width: 80%;
-			margin: 0 auto;
-		}
+	object-fit: cover;
+	object-position: 0 90%;
+	border-radius: $borderRadius;
+}
+
+.product-img-container {
+	position: relative !important;
+	width: 100%;
+	padding-top: 100%;
+}
+
+.btn-edit {
+	@include btn();
+	padding: 0;
+	width: $btnHeight;
+	margin-left: 0.8rem;
+	background-color: #8d8d8d;
+
+	display: flex;
+	align-items: center;
+
+	img {
+		width: 80%;
+		margin: 0 auto;
 	}
+}
 
-	.not-editable {
-		background-color: #d4d4d4;
-		position: relative;
-	}
+.not-editable {
+	background-color: #d4d4d4;
+	position: relative;
+}
 
-	.not-editable-tooltip {
+.not-editable-tooltip {
+	position: absolute;
+	font-size: 0.9em;
+	top: 120%;
+	width: 4rem;
+	background: rgba(0, 0, 0, 0.6);
+	color: white;
+	font-weight: 400;
+	padding: 0.5rem;
+	right: 0;
+	display: none;
+	z-index: 10;
+
+	&::after {
+		content: ' ';
 		position: absolute;
-		font-size: 0.9em;
-		top: 120%;
-		width: 4rem;
-		background: rgba(0, 0, 0, 0.6);
-		color: white;
-		font-weight: 400;
-		padding: 0.5rem;
-		right: 0;
-		display: none;
-
-		&::after {
-			content: ' ';
-			position: absolute;
-			bottom: 100%;
-			left: 75%;
-			margin-left: -5px;
-			border-width: 5px;
-			border-style: solid;
-			border-color: transparent transparent rgba(0, 0, 0, 0.6) transparent;
-		}
+		bottom: 100%;
+		left: 75%;
+		margin-left: -5px;
+		border-width: 5px;
+		border-style: solid;
+		border-color: transparent transparent rgba(0, 0, 0, 0.6) transparent;
 	}
+}
 
-	.btn-edit:hover .not-editable-tooltip {
-		display: block;
-	}
+.btn-edit:hover .not-editable-tooltip {
+	display: block;
 }
 
 .page-selection {
@@ -267,10 +283,10 @@
 		.product-price {
 			margin-bottom: 1rem;
 		}
+	}
 
-		.btn-edit {
-			width: $btnHeight - 0.5rem;
-		}
+	.btn-edit {
+		width: $btnHeight - 0.5rem;
 	}
 
 	.search-filters {

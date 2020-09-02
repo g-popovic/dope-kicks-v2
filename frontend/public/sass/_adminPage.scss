@@ -61,7 +61,7 @@
 		width: 100%;
 		padding-left: 10%;
 		padding-right: 10%;
-		justify-content: center;
+		justify-content: space-between;
 		padding-top: 7rem;
 	}
 
@@ -79,7 +79,7 @@
 
 	.admin-right-panel {
 		order: 2;
-		flex-basis: 60%;
+		flex-basis: 55%;
 		height: 95%;
 
 		display: flex;

@@ -3,7 +3,7 @@
 .products-main-container {
 	width: 100%;
 	background: white;
-	margin-top: 3rem;
+	margin-top: $navMobileHeight;
 	padding: 2rem 0 3rem;
 }
 
@@ -296,6 +296,10 @@
 
 		.search {
 			flex-basis: 30%;
+
+			input {
+				padding: 0.4rem 0.8rem;
+			}
 		}
 
 		.price-filters {

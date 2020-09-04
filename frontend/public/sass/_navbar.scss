@@ -1,6 +1,7 @@
 nav {
 	height: $navMobileHeight;
 	background: linear-gradient(90deg, #26c8fb 0%, #8326fb 100%);
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
 
 	position: fixed;
 	width: 100%;
@@ -13,5 +14,6 @@ nav {
 @media only screen and (min-width: 1000px) {
 	nav {
 		height: 4rem;
+		box-shadow: none;
 	}
 }

@@ -6,6 +6,10 @@ body {
   background: #f4f4f4;
 }
 
+html {
+  font-size: 13px;
+}
+
 button,
 a {
   cursor: pointer;
@@ -29,7 +33,24 @@ input {
   border: none;
   display: block;
   border-bottom: 1px solid #8d8d8d;
-  padding: 0.4rem 0.8rem;
+  padding: 0.6rem;
+  padding-left: 0;
+}
+
+.input-container {
+  text-align: left;
+  margin: 0 auto;
+  width: auto;
+}
+
+.input-container input {
+  font-size: 1.1rem;
+  width: 100%;
+}
+
+.input-container label {
+  font-size: 0.9rem;
+  color: #4b4b4b;
 }
 
 * {
@@ -140,9 +161,11 @@ input {
 }
 
 nav {
-  height: 3rem;
+  height: 3.5rem;
   background: -webkit-gradient(linear, left top, right top, from(#26c8fb), to(#8326fb));
   background: linear-gradient(90deg, #26c8fb 0%, #8326fb 100%);
+  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
   position: fixed;
   width: 100%;
   top: 0;
@@ -154,13 +177,15 @@ nav {
 @media only screen and (min-width: 1000px) {
   nav {
     height: 4rem;
+    -webkit-box-shadow: none;
+            box-shadow: none;
   }
 }
 
 .products-main-container {
   width: 100%;
   background: white;
-  margin-top: 3rem;
+  margin-top: 3.5rem;
   padding: 2rem 0 3rem;
 }
 
@@ -531,6 +556,9 @@ nav {
     -ms-flex-preferred-size: 30%;
         flex-basis: 30%;
   }
+  .search-filters .search input {
+    padding: 0.4rem 0.8rem;
+  }
   .search-filters .price-filters {
     margin-right: 4rem;
   }
@@ -689,7 +717,7 @@ nav {
           box-sizing: border-box;
   width: 100vw;
   min-height: 100vh;
-  padding: 4.1rem 5% 0;
+  padding: 4.6rem 5% 0;
   text-align: left;
 }
 
@@ -765,6 +793,145 @@ nav {
   .product-page-description {
     font-size: 1.2rem;
     margin-bottom: 6rem;
+  }
+}
+
+.amazoon-logo {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #464646;
+  font-family: 'Days One', sans-serif;
+}
+
+.login-page-container {
+  background: white;
+  min-height: 100vh;
+  width: 100vw;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.login-page-container h1 {
+  font-size: 1.8rem;
+  margin: 0 auto 6rem;
+}
+
+.login-page-container .input-container {
+  width: 18rem;
+}
+
+.login-page-container .input-container:first-of-type {
+  margin-bottom: 1rem;
+}
+
+.sign-in-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 18rem;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 3rem auto 3rem;
+}
+
+.login-seperation {
+  position: relative;
+  width: 18rem;
+  margin: 5rem auto;
+}
+
+.login-seperation span {
+  background: white;
+  z-index: 10;
+  position: relative;
+  padding: 0 0.5rem;
+  color: #6d6d6d;
+}
+
+.login-seperation::before {
+  content: '';
+  height: 1px;
+  width: 100%;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  right: 0;
+  bottom: 0;
+  background: #6d6d6d;
+}
+
+.google {
+  background: white;
+  border: none;
+  border-radius: 100rem;
+  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  padding: 0.8rem;
+  margin: 0 auto 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.google img {
+  width: 1.6rem;
+}
+
+.google span {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 1rem;
+  color: #696969;
+}
+
+@media only screen and (min-width: 1000px) {
+  .login-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    -o-object-fit: cover;
+       object-fit: cover;
+    z-index: -10;
+  }
+  .image-tint {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -5;
+    background-image: -webkit-gradient(linear, left top, right top, from(black), to(rgba(0, 0, 0, 0)));
+    background-image: linear-gradient(90deg, black, rgba(0, 0, 0, 0));
+  }
+  .login-page-container {
+    width: 28rem;
   }
 }
 /*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,40 @@
+.checkout-page-container {
+	width: 100vw;
+	height: 100vh;
+	background: white;
+	box-sizing: border-box;
+	padding-top: 4rem;
+
+	table {
+		width: 80%;
+		margin: 3rem auto;
+
+		th,
+		td {
+			border: 1px solid rgb(200, 200, 200);
+			margin: 0;
+			padding: 1rem;
+		}
+
+		td {
+			font-size: 1.1rem;
+		}
+
+		th {
+			background: #f0f0f0;
+		}
+
+		input {
+			border: 1px solid #cacaca;
+			width: 4rem;
+			margin: 0 auto;
+			text-align: center;
+		}
+	}
+}
+
+.cart-product-image {
+	width: 4rem;
+	height: 4rem;
+	margin: 0;
+}

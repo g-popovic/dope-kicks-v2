@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev-start": "nodemon server.js",
-        "frontend": "cd frontend && npm start"
+		"frontend": "cd frontend && npm start"
 	},
 	"keywords": [],
 	"author": "",
@@ -24,6 +24,7 @@
 		"passport": "^0.4.1",
 		"passport-google-oauth20": "^2.0.0",
 		"passport-local": "^1.0.0",
+		"react-paypal-express-checkout": "^1.0.5",
 		"react-router-dom": "^5.2.0"
 	}
 }

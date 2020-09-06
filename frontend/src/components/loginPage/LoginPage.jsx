@@ -1,7 +1,7 @@
 import React from 'react';
-import LabeledInput from './partial/LabeledInput';
-import GoogleLogo from '../images/google-icon.svg';
-import LoginBackground from '../images/Nike Sneakers Background.jpg';
+import LabeledInput from '../reusable/LabeledInput';
+import GoogleLogo from '../../images/google-icon.svg';
+import LoginBackground from '../../images/Nike Sneakers Background.jpg';
 
 function LoginPage() {
 	return (

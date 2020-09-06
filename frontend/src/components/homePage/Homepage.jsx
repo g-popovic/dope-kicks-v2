@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Product from './partial/Product';
+import Product from './Product';
 
 function Homepage() {
 	const [openCategory, setOpenCategory] = useState(false);

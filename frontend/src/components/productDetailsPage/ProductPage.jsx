@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductButtons from './partial/ProductButtons';
+import ProductButtons from '../homePage/ProductButtons';
 
 function ProductPage(props) {
 	return (

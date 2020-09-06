@@ -1,7 +1,7 @@
 import React from 'react';
-import BestsellersChart from './partial/BestsellersChart';
-import RecentSalesChart from './partial/RecentSalesChart';
-import GeneralStats from './partial/GeneralStats';
+import BestsellersChart from './BestsellersChart';
+import RecentSalesChart from './RecentSalesChart';
+import GeneralStats from './GeneralStats';
 
 function AdminPage() {
 	return (

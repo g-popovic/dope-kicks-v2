@@ -19,7 +19,7 @@ function LoginPage() {
 						label="Password"
 						name="password"
 						placeholder="Enter Password"
-						isPassword={true}
+						inputType="password"
 					/>
 
 					<div className="sign-in-buttons">

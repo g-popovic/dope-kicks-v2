@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Product from './Product';
+import CategoryDropdown from '../reusable/CategoryDropdown';
 
 function Homepage() {
-	const [openCategory, setOpenCategory] = useState(false);
-
 	return (
 		<div className="products-main-container">
 			<div className="search-filters">
@@ -15,24 +14,14 @@ function Homepage() {
 					<span className="price-filters">
 						<span>
 							<p>From:</p>
-							<input type="text" placeholder="$$$" />
+							<input type="number" placeholder="$$$" />
 						</span>
 						<span>
 							<p>To:</p>
-							<input type="text" placeholder="$$$" />
+							<input type="number" placeholder="$$$" />
 						</span>
 					</span>
-					<span
-						className="category-dropdown"
-						onClick={() => setOpenCategory(prev => !prev)}>
-						<button className="btn-category">Running</button>
-						<ul className={openCategory ? '' : 'hidden'}>
-							<li>All Categories</li>
-							<li>Running</li>
-							<li>Lifestyle</li>
-							<li>Basketball</li>
-						</ul>
-					</span>
+					<CategoryDropdown default="All Categories" />
 				</div>
 			</div>
 

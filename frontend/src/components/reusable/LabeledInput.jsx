@@ -6,7 +6,14 @@ function LabeledInput(props) {
 			<label htmlFor={props.name}>{props.label}</label>
 			<input
 				name={props.name}
-				type={props.isPassword ? 'password' : 'text'}
+				id={props.name}
+				type={
+					props.inputType === 'password'
+						? 'password'
+						: props.inputType === 'number'
+						? 'number'
+						: 'text'
+				}
 				autoComplete="off"
 				placeholder={props.placeholder}></input>
 		</div>

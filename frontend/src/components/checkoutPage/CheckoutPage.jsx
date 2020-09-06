@@ -1,5 +1,6 @@
 import React from 'react';
 import CartTableItem from './CartTableItem';
+import PayPal from './PayPal';
 
 function CheckoutPage() {
 	return (
@@ -83,14 +84,11 @@ function CheckoutPage() {
 						<span>Subtotal: </span> <span>$269.00</span>
 					</p>
 					<p>
-						<span>Total: </span> <span>$269.00</span>
+						<span>Total: </span> <span>$287.44</span>
 					</p>
 				</div>
 
-				<p>Checkout with:</p>
-				<button>
-					<img src={''} alt="paypal logo" />
-				</button>
+				<PayPal className="paypal-button" />
 			</div>
 		</div>
 	);

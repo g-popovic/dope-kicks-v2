@@ -5,7 +5,7 @@
 	min-height: 100vh;
 	background: white;
 	box-sizing: border-box;
-	padding-top: 5rem;
+	padding: 5rem 0 3rem;
 
 	h1 {
 		text-align: left;
@@ -140,6 +140,37 @@ input::-webkit-inner-spin-button {
 
 		-moz-appearance: textfield;
 	}
+}
+
+.checkout-container {
+	margin-top: 4rem;
+}
+
+.checkout-prices {
+	width: 16rem;
+	max-width: 95vw;
+	margin: 0 auto 2rem;
+
+	p {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		span {
+			font-size: 1.2rem;
+
+			&:last-child {
+				font-weight: 700;
+				font-size: 1.3rem;
+			}
+		}
+	}
+}
+
+.paypal-button {
+	max-width: 100vw;
+	border-radius: 5px;
+	overflow: hidden;
 }
 
 @keyframes wiggle {

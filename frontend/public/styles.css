@@ -949,7 +949,7 @@ nav {
   background: white;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  padding-top: 5rem;
+  padding: 5rem 0 3rem;
 }
 
 .checkout-page-container h1 {
@@ -1083,6 +1083,43 @@ input::-webkit-inner-spin-button {
   padding-right: 0;
   text-align: center;
   -moz-appearance: textfield;
+}
+
+.checkout-container {
+  margin-top: 4rem;
+}
+
+.checkout-prices {
+  width: 16rem;
+  max-width: 95vw;
+  margin: 0 auto 2rem;
+}
+
+.checkout-prices p {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.checkout-prices p span {
+  font-size: 1.2rem;
+}
+
+.checkout-prices p span:last-child {
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.paypal-button {
+  max-width: 100vw;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 @-webkit-keyframes wiggle {

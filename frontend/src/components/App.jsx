@@ -12,7 +12,7 @@ function App() {
 		<>
 			<Navbar />
 			<Homepage />
-			<EditProductPanel />
+			{/* <EditProductPanel /> */}
 		</>
 	);
 }

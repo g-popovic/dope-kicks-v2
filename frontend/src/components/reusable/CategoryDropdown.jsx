@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function CategoryDropdown(props) {
-	const [isOpen, setIsOpen] = useState(false);
-
 	return (
-		<span className="category-dropdown" onClick={() => setIsOpen(prev => !prev)}>
+		<span className="category-dropdown" onClick={() => alert('clicked')}>
 			<button className="btn-category">Running</button>
-			<ul className={isOpen ? '' : 'hidden'}>
+			<ul className={'hidden'}>
 				{props.default ? <li>{props.default}</li> : null}
 				<li>Running</li>
 				<li>Lifestyle</li>

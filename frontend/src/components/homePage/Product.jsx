@@ -2,7 +2,6 @@ import React from 'react';
 import ProductButtons from './ProductButtons';
 
 function Product(props) {
-	console.log(props);
 	return (
 		<div className="product">
 			<div className="product-img-container">

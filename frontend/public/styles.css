@@ -251,8 +251,8 @@ nav {
   background: #26adfb;
   -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
           box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
-  -webkit-animation: slideFromSide 0.8s normal;
-          animation: slideFromSide 0.8s normal;
+  -webkit-animation: slideFromSide 0.5s normal;
+          animation: slideFromSide 0.5s normal;
 }
 
 .nav-mobile-panel::after {
@@ -295,12 +295,10 @@ nav {
 
 @-webkit-keyframes slideFromSide {
   0% {
-    left: 100%;
     -webkit-transform: translateX(100%);
             transform: translateX(100%);
   }
   100% {
-    right: 0;
     -webkit-transform: translateX(0);
             transform: translateX(0);
   }
@@ -308,12 +306,10 @@ nav {
 
 @keyframes slideFromSide {
   0% {
-    left: 100%;
     -webkit-transform: translateX(100%);
             transform: translateX(100%);
   }
   100% {
-    right: 0;
     -webkit-transform: translateX(0);
             transform: translateX(0);
   }
@@ -501,6 +497,7 @@ nav {
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
           box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
   z-index: 1;
+  margin: 0;
 }
 
 .category-dropdown ul li {
@@ -1395,12 +1392,17 @@ input::-webkit-inner-spin-button {
 }
 
 .edit-product-container {
-  width: 100vw;
+  width: 95vw;
+  margin: 1.5rem auto;
   min-height: 100vh;
   padding: 4rem 10% 2rem;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  position: relative;
+  border-radius: 8px;
   background: white;
+  -webkit-animation: popDownMobile 0.5s normal;
+          animation: popDownMobile 0.5s normal;
 }
 
 .edit-product-container h1 {
@@ -1490,14 +1492,25 @@ input::-webkit-inner-spin-button {
       flex-basis: 42%;
 }
 
+.exit-edit-product {
+  border: none;
+  background: none;
+  position: absolute;
+  top: 1.3rem;
+  right: 1rem;
+}
+
 @media only screen and (min-width: 1000px) {
+  .exit-edit-product {
+    top: 2rem;
+    right: 2rem;
+  }
   .edit-product-container {
     position: absolute;
     top: 50%;
     left: 50%;
     -webkit-transform: translateY(-50%) translateX(-50%);
             transform: translateY(-50%) translateX(-50%);
-    border-radius: 8px;
     width: 60rem;
     height: 50rem;
     min-height: 50rem;
@@ -1505,8 +1518,8 @@ input::-webkit-inner-spin-button {
     padding-right: 3rem;
     margin: 0 auto;
     max-height: 80rem;
-    -webkit-animation: popDown 0.8s normal;
-            animation: popDown 0.8s normal;
+    -webkit-animation: popDown 0.5s normal;
+            animation: popDown 0.5s normal;
   }
   .edit-product-container h1 {
     margin-bottom: 4rem;
@@ -1552,29 +1565,43 @@ input::-webkit-inner-spin-button {
   }
 }
 
-@-webkit-keyframes popDown {
+@-webkit-keyframes popDownMobile {
   0% {
-    -webkit-transform: translateY(-100%) translateX(-50%);
-            transform: translateY(-100%) translateX(-50%);
-    top: 0;
+    top: -100%;
   }
   100% {
-    -webkit-transform: translateY(-50%) translateX(-50%);
-            transform: translateY(-50%) translateX(-50%);
-    top: 50%;
+    top: 0;
+  }
+}
+
+@keyframes popDownMobile {
+  0% {
+    top: -100%;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+@-webkit-keyframes popDown {
+  0% {
+    -webkit-transform: translateX(-50%) translateY(-200%);
+            transform: translateX(-50%) translateY(-200%);
+  }
+  100% {
+    -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
   }
 }
 
 @keyframes popDown {
   0% {
-    -webkit-transform: translateY(-100%) translateX(-50%);
-            transform: translateY(-100%) translateX(-50%);
-    top: 0;
+    -webkit-transform: translateX(-50%) translateY(-200%);
+            transform: translateX(-50%) translateY(-200%);
   }
   100% {
-    -webkit-transform: translateY(-50%) translateX(-50%);
-            transform: translateY(-50%) translateX(-50%);
-    top: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
   }
 }
 /*# sourceMappingURL=styles.css.map */

@@ -79,7 +79,7 @@ nav {
 	background: $primaryColor;
 	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
 
-	animation: slideFromSide 0.8s normal;
+	animation: slideFromSide 0.5s normal;
 
 	&::after {
 		content: '';
@@ -113,12 +113,10 @@ nav {
 
 @keyframes slideFromSide {
 	0% {
-		left: 100%;
 		transform: translateX(100%);
 	}
 
 	100% {
-		right: 0;
 		transform: translateX(0);
 	}
 }

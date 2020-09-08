@@ -17,12 +17,17 @@
 }
 
 .edit-product-container {
-	width: 100vw;
+	width: 95vw;
+	margin: 1.5rem auto;
 	min-height: 100vh;
 	padding: 4rem 10% 2rem;
 	box-sizing: border-box;
+	position: relative;
+	border-radius: $borderRadius;
 
 	background: white;
+
+	animation: popDownMobile 0.5s normal;
 
 	h1 {
 		margin: 0 auto 4rem;
@@ -107,14 +112,26 @@
 	}
 }
 
+.exit-edit-product {
+	border: none;
+	background: none;
+	position: absolute;
+	top: 1.3rem;
+	right: 1rem;
+}
+
 @media only screen and (min-width: $breakpointDesktop) {
+	.exit-edit-product {
+		top: 2rem;
+		right: 2rem;
+	}
+
 	.edit-product-container {
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		transform: translateY(-50%) translateX(-50%);
 
-		border-radius: $borderRadius;
 		width: 60rem;
 		height: 50rem;
 		min-height: 50rem;
@@ -123,7 +140,7 @@
 		margin: 0 auto;
 		max-height: 80rem;
 
-		animation: popDown 0.8s normal;
+		animation: popDown 0.5s normal;
 
 		h1 {
 			margin-bottom: 4rem;
@@ -172,14 +189,21 @@
 	}
 }
 
+@keyframes popDownMobile {
+	0% {
+		top: -100%;
+	}
+	100% {
+		top: 0;
+	}
+}
+
 @keyframes popDown {
 	0% {
-		transform: translateY(-100%) translateX(-50%);
-		top: 0;
+		transform: translateX(-50%) translateY(-200%);
 	}
 
 	100% {
-		transform: translateY(-50%) translateX(-50%);
-		top: 50%;
+		transform: translateX(-50%) translateY(-50%);
 	}
 }

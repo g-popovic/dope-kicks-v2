@@ -3,15 +3,22 @@ import BestsellersChart from './BestsellersChart';
 import RecentSalesChart from './RecentSalesChart';
 import GeneralStats from './GeneralStats';
 
+import Navbar from '../reusable/Navbar';
+import EditProductPanel from '../editProduct/EditProductPanel';
+
 function AdminPage() {
 	return (
-		<div className="admin-page-container">
-			<BestsellersChart />
-			<div className="admin-right-panel">
-				<GeneralStats />
-				<RecentSalesChart />
+		<>
+			<Navbar />
+			<EditProductPanel />
+			<div className="admin-page-container">
+				<BestsellersChart />
+				<div className="admin-right-panel">
+					<GeneralStats />
+					<RecentSalesChart />
+				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 

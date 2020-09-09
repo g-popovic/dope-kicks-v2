@@ -63,16 +63,10 @@ passport.use(
 						null,
 						false,
 						req.flash('message', 'Incorrect password.')
-						// { message: 'Incorrect password.' }
 					);
 				}
 			} else {
-				return done(
-					null,
-					false,
-					req.flash('message', 'Incorrect email.')
-					// { message: 'Incorrect email.' }
-				);
+				return done(null, false, req.flash('message', 'Incorrect email.'));
 			}
 		}
 	)

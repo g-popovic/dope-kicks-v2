@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
+const cors = require('cors');
 const flash = require('connect-flash');
 
 const productRoutes = require('./routes/productRoutes');
@@ -16,6 +17,15 @@ const app = express();
 // Set up middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(
+	cors({
+		credentials: true,
+		origin:
+			process.env.NODE_ENV === 'production'
+				? 'https://production-url.com'
+				: 'http://localhost:3000'
+	})
+);
 app.use(
 	session({
 		secret: process.env.SESSION_SECRET,

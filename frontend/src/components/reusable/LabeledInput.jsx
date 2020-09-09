@@ -7,6 +7,8 @@ function LabeledInput(props) {
 			<input
 				name={props.name}
 				id={props.name}
+				value={props.value}
+				onChange={props.onChange}
 				type={
 					props.inputType === 'password'
 						? 'password'

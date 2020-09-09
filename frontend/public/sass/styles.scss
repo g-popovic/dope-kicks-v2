@@ -39,6 +39,10 @@ input {
 	border-bottom: 1px solid #8d8d8d;
 	padding: 0.6rem;
 	padding-left: 0;
+
+	&:focus {
+		border-bottom: 2px solid $primaryColor;
+	}
 }
 
 .input-container {
@@ -85,6 +89,13 @@ input {
 	&:active {
 		background-color: $primaryColor;
 	}
+}
+
+.btn-primary-loading,
+.btn-primary-loading:hover,
+.btn-primary-loading:active {
+	background: #ace1ff;
+	cursor: default;
 }
 
 .btn-secondary {

@@ -37,6 +37,10 @@ input {
   padding-left: 0;
 }
 
+input:focus {
+  border-bottom: 2px solid #26adfb;
+}
+
 .input-container {
   text-align: left;
   margin: 0 auto;
@@ -103,6 +107,13 @@ input {
 
 .btn-primary:active {
   background-color: #26adfb;
+}
+
+.btn-primary-loading,
+.btn-primary-loading:hover,
+.btn-primary-loading:active {
+  background: #ace1ff;
+  cursor: default;
 }
 
 .btn-secondary {
@@ -1003,7 +1014,7 @@ nav {
 }
 
 .amazoon-logo {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
   font-size: 0.9rem;
   color: #464646;
   font-family: 'Days One', sans-serif;
@@ -1015,6 +1026,7 @@ nav {
   width: 100vw;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  padding: 1rem 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1037,10 +1049,11 @@ nav {
 
 .login-page-container .input-container {
   width: 18rem;
+  margin-bottom: 1.8rem;
 }
 
-.login-page-container .input-container:first-of-type {
-  margin-bottom: 1rem;
+.login-page-container .input-container:last-of-type {
+  margin-bottom: 0;
 }
 
 .sign-in-buttons {
@@ -1055,6 +1068,10 @@ nav {
       -ms-flex-align: center;
           align-items: center;
   margin: 3rem auto 3rem;
+}
+
+.sign-in-buttons a {
+  text-decoration: underline;
 }
 
 .login-seperation {
@@ -1119,6 +1136,10 @@ nav {
   background: white;
 }
 
+.login-error {
+  color: #f00101;
+}
+
 @media only screen and (min-width: 1000px) {
   .login-background {
     position: absolute;
@@ -1146,6 +1167,8 @@ nav {
   }
   .login-page-container {
     width: 28rem;
+    height: 100vh;
+    overflow-y: auto;
   }
 }
 
@@ -1378,7 +1401,7 @@ input::-webkit-inner-spin-button {
 
 .edit-product-background {
   position: fixed;
-  z-index: 20;
+  z-index: 100;
   height: 100vh;
   top: 0;
   overflow: auto;

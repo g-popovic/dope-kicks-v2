@@ -18,11 +18,11 @@ function editPanelOpenReducer(state = false, action) {
 	}
 }
 
-function loggedInReducer(state = false, action) {
+function loggedInReducer(state = 'loading', action) {
 	switch (action.type) {
-		case 'SIGN_IN':
+		case 'LOGIN':
 			return true;
-		case 'SIGN_OUT':
+		case 'LOGOUT':
 			return false;
 		default:
 			return state;
@@ -31,6 +31,6 @@ function loggedInReducer(state = false, action) {
 
 export default combineReducers({
 	isNavOpen: navOpenReducer,
-	isLoggedIn: loggedInReducer,
+	isAuthenticated: loggedInReducer,
 	isEditPanelOpen: editPanelOpenReducer
 });

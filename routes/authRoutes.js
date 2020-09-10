@@ -10,7 +10,7 @@ router.get(
 );
 
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-	res.send('Successfully authenticated with Google.');
+	res.redirect('http://localhost:3000');
 });
 
 router.post('/register', async (req, res) => {
@@ -50,7 +50,7 @@ router.get('/login/success', authUser, (req, res) => {
 	res.send('Login successful.');
 });
 
-router.get('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
 	req.logout();
 	res.send('Logged out.');
 });

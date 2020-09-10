@@ -4,14 +4,36 @@ import StoreIcon from '../../images/store-24px.svg';
 import LogoutIcon from '../../images/exit_to_app-24px.svg';
 import NewProductIcon from '../../images/add_business-white-18dp.svg';
 import Burger from '../../images/menu-24px.svg';
+import ChartIcon from '../../images/insert_chart-white-18dp.svg';
 import CloseIcon from '../../images/close-24px.svg';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { toggleNavOpen, toggleEditPanel } from '../../redux/actions';
+import { useSelector, useDispatch, batch } from 'react-redux';
+import {
+	toggleNavOpen,
+	toggleEditPanel,
+	authLogout,
+	setRole
+} from '../../redux/actions';
+import axiosApp from '../../utils/axiosConfig';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
 	const isOpen = useSelector(state => state.isNavOpen);
+	const userRole = useSelector(state => state.userRole);
 	const dispatch = useDispatch();
+
+	async function logout() {
+		try {
+			await axiosApp.post('/auth/logout');
+
+			batch(() => {
+				dispatch(authLogout());
+				dispatch(setRole(null));
+			});
+		} catch (e) {
+			console.log(e);
+		}
+	}
 
 	return (
 		<nav>
@@ -25,14 +47,11 @@ function Navbar() {
 					/>
 				</button>
 				<ul className="hide-mobile">
-					<li>Store</li>
-					<li>
-						<Cart amount={3} />
-					</li>
-					<li onClick={() => dispatch(toggleEditPanel())}>
-						Create Product
-					</li>
-					<li>Logout</li>
+					<NavItems
+						userRole={userRole}
+						toggleNewProduct={() => dispatch(toggleEditPanel())}
+						logout={logout}
+					/>
 				</ul>
 			</span>
 
@@ -53,22 +72,59 @@ function Navbar() {
 					/>
 
 					<ul onClick={() => dispatch(toggleNavOpen())}>
-						<li>
-							<img alt="store" src={StoreIcon} />
-						</li>
-						<li>
-							<Cart amount={3} />
-						</li>
-						<li onClick={() => dispatch(toggleEditPanel())}>
-							<img alt="add item" src={NewProductIcon} />
-						</li>
-						<li>
-							<img alt="logout" src={LogoutIcon} />
-						</li>
+						<NavItems
+							userRole={userRole}
+							toggleNewProduct={() => dispatch(toggleEditPanel())}
+							logout={logout}
+						/>
 					</ul>
 				</div>
 			</div>
 		</nav>
+	);
+}
+
+function NavItems(props) {
+	return (
+		<>
+			<li>
+				<Link to="/">
+					<img className="hide-desktop" alt="store" src={StoreIcon} />
+					<p className="hide-mobile">Home</p>
+				</Link>
+			</li>
+			{props.userRole === 'admin' || props.userRole === 'master' ? (
+				<>
+					<li onClick={props.toggleNewProduct}>
+						<img
+							className="hide-desktop"
+							alt="add item"
+							src={NewProductIcon}
+						/>
+						<p className="hide-mobile">Add Product</p>
+					</li>
+					<li>
+						<Link to="/admin">
+							<img
+								className="hide-desktop"
+								alt="store"
+								src={ChartIcon}
+							/>
+							<p className="hide-mobile">Admin Analytics</p>
+						</Link>
+					</li>
+				</>
+			) : null}
+			<li>
+				<Link to="/cart">
+					<Cart amount={3} />
+				</Link>
+			</li>
+			<li onClick={props.logout}>
+				<img className="hide-desktop" alt="logout" src={LogoutIcon} />
+				<p className="hide-mobile">Logout</p>
+			</li>
+		</>
 	);
 }
 

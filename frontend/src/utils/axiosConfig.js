@@ -1,5 +1,7 @@
 import axios from 'axios';
+import { backend } from './endpoints';
 
 export default axios.create({
-	baseURL: 'http://localhost:5000'
+	baseURL: backend,
+	withCredentials: true
 });

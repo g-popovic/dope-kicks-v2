@@ -21,3 +21,12 @@ export function authLogout() {
 		type: 'LOGOUT'
 	};
 }
+
+export function setRole(role) {
+	return {
+		type: 'SET_ROLE',
+		payload: {
+			role: role
+		}
+	};
+}

@@ -29,8 +29,18 @@ function loggedInReducer(state = 'loading', action) {
 	}
 }
 
+function userRoleReducer(state = null, action) {
+	switch (action.type) {
+		case 'SET_ROLE':
+			return action.payload.role;
+		default:
+			return state;
+	}
+}
+
 export default combineReducers({
 	isNavOpen: navOpenReducer,
 	isAuthenticated: loggedInReducer,
-	isEditPanelOpen: editPanelOpenReducer
+	isEditPanelOpen: editPanelOpenReducer,
+	userRole: userRoleReducer
 });

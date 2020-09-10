@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import LabeledInput from '../reusable/LabeledInput';
 import GoogleLogo from '../../images/google-icon.svg';
 import LoginBackground from '../../images/Nike Sneakers Background.jpg';
-import { useDispatch } from 'react-redux';
-import { authLogin } from '../../redux/actions';
-import axios from '../../utils/axiosConfig';
+import { useDispatch, batch } from 'react-redux';
+import { authLogin, setRole } from '../../redux/actions';
+import axiosApp from '../../utils/axiosConfig';
+import { backend } from '../../utils/endpoints';
 
 function LoginPage() {
 	const dispatch = useDispatch();
@@ -17,8 +18,11 @@ function LoginPage() {
 	const [errorMessage, setErrorMessage] = useState('');
 
 	async function authWithGoogle() {
-		// BUG: Set up proxy
-		// const result = await axios.get('/auth/google', { withCredentials: true });
+		try {
+			await axiosApp.get('/auth/google');
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	async function login(e) {
@@ -39,24 +43,26 @@ function LoginPage() {
 				email,
 				password
 			};
-			await axios.post('/auth/login', data, {
-				withCredentials: true
-			});
-			const result = await axios.get('/auth/status', {
-				withCredentials: true
-			});
+			await axiosApp.post('/auth/login', data);
+			const result = await axiosApp.get('/auth/status');
 
-			dispatch(authLogin());
+			updateLoginState(result.data.role);
 		} catch (err) {
-			if (err.response) {
+			if (err.response && err.response.status === 401) {
 				setErrorMessage(err.response.data);
 			} else {
 				setErrorMessage('Something went wrong.');
 			}
-			console.log(err);
 		}
 
 		setBtnLoading(false);
+	}
+
+	function updateLoginState(role) {
+		batch(() => {
+			dispatch(authLogin());
+			dispatch(setRole(role));
+		});
 	}
 
 	async function register(e) {
@@ -82,13 +88,11 @@ function LoginPage() {
 				email,
 				password
 			};
-			const result = await axios.post('/auth/register', data, {
-				withCredentials: true
-			});
+			const result = await axiosApp.post('/auth/register', data);
 
-			dispatch(authLogin());
+			updateLoginState(result.data.role);
 		} catch (err) {
-			if (err.response) {
+			if (err.response && err.response.status === 403) {
 				setErrorMessage(err.response.data);
 			}
 			console.log(err);
@@ -159,10 +163,13 @@ function LoginPage() {
 						<span>OR</span>
 					</div>
 
-					<button className="google" onClick={authWithGoogle}>
+					<a
+						href={`${backend}/auth/google`}
+						className="google"
+						onClick={authWithGoogle}>
 						<img alt="google-icon" src={GoogleLogo} />
 						<span>Continue with Google</span>
-					</button>
+					</a>
 				</div>
 			</div>
 			<div className="image-tint"></div>

@@ -7,21 +7,36 @@ import AdminPage from './adminStatsPage/AdminPage';
 import LoginPage from './loginPage/LoginPage';
 import CheckoutPage from './checkoutPage/CheckoutPage';
 
-import { useDispatch } from 'react-redux';
-import { authLogin, authLogout } from '../redux/actions';
-import axios from '../utils/axiosConfig';
+import { useDispatch, batch } from 'react-redux';
+import { authLogin, authLogout, setRole } from '../redux/actions';
+import axiosApp from '../utils/axiosConfig';
+import axios from 'axios';
 
 function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		axios
-			.get('/auth/status', { withCredentials: true })
-			.then(res => dispatch(authLogin()))
-			.catch(e => dispatch(authLogout()));
+		const source = axios.CancelToken.source();
+
+		async function checkStatus() {
+			try {
+				const result = await axiosApp.get('/auth/status', {
+					cancelToken: source.token
+				});
+
+				batch(() => {
+					dispatch(authLogin());
+					dispatch(setRole(result.data.role));
+				});
+			} catch (err) {
+				dispatch(authLogout());
+			}
+		}
+
+		checkStatus();
 
 		return () => {
-			// cleanup;
+			source.cancel();
 		};
 	}, []);
 

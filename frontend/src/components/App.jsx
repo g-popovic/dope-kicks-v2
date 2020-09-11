@@ -9,7 +9,7 @@ import CheckoutPage from './checkoutPage/CheckoutPage';
 import ProductDetails from './productDetailsPage/ProductPage';
 
 import { useDispatch, batch } from 'react-redux';
-import { authLogin, authLogout, setRole } from '../redux/actions';
+import { authLogin, authLogout, setRole } from '../redux/reduxActions';
 import axiosApp from '../utils/axiosConfig';
 import axios from 'axios';
 
@@ -48,7 +48,7 @@ function App() {
 				<AuthRoute exact path="/" component={Homepage} />
 				<AuthRoute path="/cart" component={CheckoutPage} />
 				<AdminRoute path="/admin" component={AdminPage} />
-				<AdminRoute path="/product/:id" component={ProductDetails} />
+				<AuthRoute path="/product" component={ProductDetails} />
 				<h1>Page not found: Error 404</h1>
 			</Switch>
 		</Router>

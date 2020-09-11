@@ -189,7 +189,7 @@
 	padding: 0;
 	width: $btnHeight;
 	margin-left: 0.8rem;
-	background-color: #8d8d8d;
+	background-color: #7c7c7c;
 
 	display: flex;
 	align-items: center;
@@ -198,11 +198,24 @@
 		width: 80%;
 		margin: 0 auto;
 	}
+
+	&:hover {
+		background-color: #646464;
+	}
+
+	&:active {
+		background-color: #7c7c7c;
+	}
 }
 
 .not-editable {
-	background-color: #d4d4d4;
+	background-color: #cacaca;
 	position: relative;
+	cursor: default;
+
+	&:hover {
+		background-color: #cacaca;
+	}
 }
 
 .not-editable-tooltip {

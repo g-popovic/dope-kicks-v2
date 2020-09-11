@@ -4,19 +4,13 @@ import { ROLES } from '../../utils/data';
 import { Link } from 'react-router-dom';
 
 function Product(props) {
-	const canEdit =
-		props.userRole === ROLES.MASTER ||
-		(props.userRole === ROLES.ADMIN && !props.product.isDefault);
-
-	const isAdmin = props.userRole === 'admin' || props.userRole === 'master';
-
 	function setImgToDefault(e) {
 		e.target.src = require('../../images/default_image.png');
 	}
 
 	return (
 		<div className="product">
-			<Link to={'/product/' + props.product._id}>
+			<Link to={'/product?id=' + props.product._id}>
 				<div className="product-img-container">
 					<img
 						className="product-image"
@@ -30,11 +24,7 @@ function Product(props) {
 					{'$' + (Math.round(props.product.price) / 100).toFixed(2)}
 				</p>
 			</Link>
-			<ProductButtons
-				isAdmin={isAdmin}
-				canEdit={canEdit}
-				product={props.product}
-			/>
+			<ProductButtons userRole={props.userRole} product={props.product} />
 		</div>
 	);
 }

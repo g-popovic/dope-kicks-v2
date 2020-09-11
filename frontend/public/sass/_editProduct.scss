@@ -125,6 +125,18 @@
 	right: 1rem;
 }
 
+.delete-product {
+	text-decoration: underline;
+	background: none;
+	border: none;
+	font-size: 0.9rem;
+	color: #444444;
+	position: absolute;
+	left: 50%;
+	top: 1.5rem;
+	transform: translateX(-50%);
+}
+
 @media only screen and (min-width: $breakpointDesktop) {
 	.exit-edit-product {
 		top: 2rem;

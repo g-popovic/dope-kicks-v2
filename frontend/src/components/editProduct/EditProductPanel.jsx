@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import LabeledInput from '../reusable/LabeledInput';
-import CategoryDropdown from '../reusable/CategoryDropdown';
 import CloseIcon from '../../images/close_black-24px.svg';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleEditPanel } from '../../redux/actions';
+import { toggleEditPanel } from '../../redux/reduxActions';
 import axiosApp from '../../utils/axiosConfig';
 
 function EditProductPanel() {
@@ -16,6 +15,7 @@ function EditProductPanel() {
 	const [price, setPrice] = useState('');
 	const [description, setDescription] = useState('');
 	const [imagePath, setImagePath] = useState('');
+	const [category, setCategory] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
@@ -39,9 +39,10 @@ function EditProductPanel() {
 				price,
 				description,
 				imagePath,
-				category: 'running'
+				category
 			};
 			await axiosApp.post('/products/new-product', data);
+			dispatch(toggleEditPanel());
 		} catch (err) {
 			console.log(err);
 		}
@@ -58,7 +59,7 @@ function EditProductPanel() {
 				price,
 				description,
 				imagePath,
-				category: 'running'
+				category
 			};
 			await axiosApp.patch(`/products/${editPanelState._id}`, data);
 
@@ -67,6 +68,15 @@ function EditProductPanel() {
 			console.log(err);
 		}
 		setIsLoading(false);
+	}
+
+	async function deleteProduct() {
+		try {
+			await axiosApp.delete(`/products/${editPanelState._id}`);
+			dispatch(toggleEditPanel());
+		} catch (e) {
+			console.log(e);
+		}
 	}
 
 	return !editPanelState ? null : (
@@ -79,6 +89,11 @@ function EditProductPanel() {
 				}
 			}}>
 			<div className="edit-product-container">
+				{isNewProduct ? null : (
+					<button onClick={deleteProduct} className="delete-product">
+						Delete Product
+					</button>
+				)}
 				<button
 					className="exit-edit-product"
 					onClick={() => dispatch(toggleEditPanel())}>
@@ -132,7 +147,14 @@ function EditProductPanel() {
 									onChange={e => setImagePath(e.target.value)}
 								/>
 
-								<CategoryDropdown />
+								<select
+									onChange={e => setCategory(e.target.value)}
+									className="btn-category">
+									<option value="">Select Category</option>
+									<option value="running">Running</option>
+									<option value="lifestyle">Lifestyle</option>
+									<option value="basketball">Basketball</option>
+								</select>
 							</div>
 						</div>
 

@@ -2,10 +2,9 @@ const router = require('express').Router();
 const Product = require('../models/productModel');
 const Order = require('../models/orderModel');
 const User = require('../models/userModel');
-const { authUser, authAdmin, authMaster } = require('../authMiddleware');
+const { authUser, authAdmin } = require('../authMiddleware');
 const { canEditOrDeleteProduct } = require('../permissions/productPermissions');
-const { Mongoose } = require('mongoose');
-const { ROLES } = require('../frontend/src/utils/data');
+const { ROLES } = require('../config/data');
 
 router.get('/', async (req, res) => {
 	const itemsPerPage = 8;
@@ -89,10 +88,11 @@ router.patch(
 		if (!name || !price || !category) return res.sendStatus(400);
 
 		Product.findByIdAndUpdate(req.product.id, {
-			name: name,
-			price: price,
-			category: category,
-			imagePath: imagePath
+			name,
+			price,
+			description,
+			category,
+			imagePath
 		})
 			.then(() => res.send('Updated product.'))
 			.catch(e => res.send(e));
@@ -118,6 +118,10 @@ router.delete(
 		res.send('Successfully deleted product.');
 	}
 );
+
+router.get('/:productId', setProduct, async (req, res) => {
+	res.send(req.product);
+});
 
 function setProduct(req, res, next) {
 	Product.findById(req.params.productId)

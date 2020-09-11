@@ -1,10 +1,18 @@
 import React from 'react';
 import SettingsIcon from '../../images/settings-24px.svg';
-import { useDispatch, batch } from 'react-redux';
-import { toggleEditPanel } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+import { toggleEditPanel } from '../../redux/reduxActions';
+import { ROLES } from '../../utils/data';
 
 function ProductButtons(props) {
 	const dispatch = useDispatch();
+
+	const canEdit =
+		props.userRole === ROLES.MASTER ||
+		(props.userRole === ROLES.ADMIN && !props.product.isDefault);
+
+	const isAdmin =
+		props.userRole === ROLES.ADMIN || props.userRole === ROLES.MASTER;
 
 	function openEditPanel() {
 		dispatch(toggleEditPanel(props.product));
@@ -13,12 +21,12 @@ function ProductButtons(props) {
 	return (
 		<span className="product-buttons-container">
 			<button className="btn-primary">ADD TO CART</button>
-			{props.isAdmin ? (
+			{isAdmin ? (
 				<button
-					onClick={() => (props.canEdit ? openEditPanel() : null)}
-					className={'btn-edit ' + (props.canEdit ? '' : ' not-editable')}>
+					onClick={() => (canEdit ? openEditPanel() : null)}
+					className={'btn-edit ' + (canEdit ? '' : ' not-editable')}>
 					<img src={SettingsIcon} />
-					{props.canEdit ? null : (
+					{canEdit ? null : (
 						<span className="not-editable-tooltip">
 							You can't edit a default product.
 						</span>

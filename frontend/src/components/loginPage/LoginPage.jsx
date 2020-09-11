@@ -3,7 +3,7 @@ import LabeledInput from '../reusable/LabeledInput';
 import GoogleLogo from '../../images/google-icon.svg';
 import LoginBackground from '../../images/Nike Sneakers Background.jpg';
 import { useDispatch, batch } from 'react-redux';
-import { authLogin, setRole } from '../../redux/actions';
+import { authLogin, setRole } from '../../redux/reduxActions';
 import axiosApp from '../../utils/axiosConfig';
 import { backend } from '../../utils/endpoints';
 

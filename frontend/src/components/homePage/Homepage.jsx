@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Product from './Product';
-import CategoryDropdown from '../reusable/CategoryDropdown';
 
 import Navbar from '../reusable/Navbar';
 import EditProductPanel from '../editProduct/EditProductPanel';
 import axiosApp from '../../utils/axiosConfig';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { setProducts } from '../../redux/actions';
+import { setProducts } from '../../redux/reduxActions';
 
 function Homepage() {
 	const [query, setQuery] = useState('');
 	const [minPrice, setMinPrice] = useState('');
 	const [maxPrice, setMaxPrice] = useState('');
-	const [category, setCategory] = useState(0);
+	const [category, setCategory] = useState('');
 
 	const dispatch = useDispatch();
 	const products = useSelector(state => state.products);
 	const userRole = useSelector(state => state.userRole);
+	const editPanelState = useSelector(state => state.editPanelState);
 
 	useEffect(() => {
 		const source = axios.CancelToken.source();
@@ -25,9 +25,12 @@ function Homepage() {
 		async function getProducts() {
 			// get products
 			try {
-				const result = await axiosApp.get('/products/', {
-					cancelToken: source.token
-				});
+				const result = await axiosApp.get(
+					`/products/?query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}&category=${category}`,
+					{
+						cancelToken: source.token
+					}
+				);
 
 				console.log(result.data);
 				dispatch(setProducts(result.data.results));
@@ -41,7 +44,7 @@ function Homepage() {
 		return () => {
 			source.cancel();
 		};
-	}, [query, minPrice, maxPrice, category]);
+	}, [query, minPrice, maxPrice, category, editPanelState]);
 
 	return (
 		<>
@@ -65,8 +68,14 @@ function Homepage() {
 								<input
 									type="number"
 									placeholder="$$$"
-									value={minPrice}
-									onChange={e => setMinPrice(e.target.value)}
+									value={minPrice / 100 || ''}
+									onChange={e =>
+										setMinPrice(
+											e.target.value
+												? e.target.value * 100
+												: ''
+										)
+									}
 								/>
 							</span>
 							<span>
@@ -74,12 +83,26 @@ function Homepage() {
 								<input
 									type="number"
 									placeholder="$$$"
-									value={maxPrice}
-									onChange={e => setMaxPrice(e.target.value)}
+									value={maxPrice / 100 || ''}
+									onChange={e =>
+										setMaxPrice(
+											e.target.value
+												? e.target.value * 100
+												: ''
+										)
+									}
 								/>
 							</span>
 						</span>
-						<CategoryDropdown default="All Categories" />
+
+						<select
+							onChange={e => setCategory(e.target.value)}
+							className="btn-category">
+							<option value="">All Categories</option>
+							<option value="running">Running</option>
+							<option value="lifestyle">Lifestyle</option>
+							<option value="basketball">Basketball</option>
+						</select>
 					</div>
 				</div>
 				{/* "https://images.nike.com/is/image/DotCom/315115_112?$NIKE_PWP_GRAY$&wid=600&hei=700" */}

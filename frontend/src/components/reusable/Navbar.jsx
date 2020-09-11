@@ -13,7 +13,7 @@ import {
 	toggleEditPanel,
 	authLogout,
 	setRole
-} from '../../redux/actions';
+} from '../../redux/reduxActions';
 import axiosApp from '../../utils/axiosConfig';
 import { Link } from 'react-router-dom';
 

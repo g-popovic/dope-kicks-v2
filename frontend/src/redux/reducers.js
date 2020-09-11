@@ -9,10 +9,14 @@ function navOpenReducer(state = false, action) {
 	}
 }
 
-function editPanelOpenReducer(state = false, action) {
+function editPanelReducer(state = false, action) {
 	switch (action.type) {
 		case 'TOGGLE_EDIT_PANEL':
-			return !state;
+			if (state) return false;
+			if (action.payload && action.payload.product) {
+				return action.payload.product;
+			} else return 'new';
+
 		default:
 			return state;
 	}
@@ -38,9 +42,19 @@ function userRoleReducer(state = null, action) {
 	}
 }
 
+function productsReducer(state = 'loading', action) {
+	switch (action.type) {
+		case 'SET_PRODUCTS':
+			return action.payload.products;
+		default:
+			return state;
+	}
+}
+
 export default combineReducers({
 	isNavOpen: navOpenReducer,
 	isAuthenticated: loggedInReducer,
-	isEditPanelOpen: editPanelOpenReducer,
-	userRole: userRoleReducer
+	editPanelState: editPanelReducer,
+	userRole: userRoleReducer,
+	products: productsReducer
 });

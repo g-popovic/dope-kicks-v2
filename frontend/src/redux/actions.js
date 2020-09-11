@@ -4,9 +4,12 @@ export function toggleNavOpen() {
 	};
 }
 
-export function toggleEditPanel() {
+export function toggleEditPanel(product) {
 	return {
-		type: 'TOGGLE_EDIT_PANEL'
+		type: 'TOGGLE_EDIT_PANEL',
+		payload: {
+			product
+		}
 	};
 }
 
@@ -27,6 +30,15 @@ export function setRole(role) {
 		type: 'SET_ROLE',
 		payload: {
 			role: role
+		}
+	};
+}
+
+export function setProducts(products) {
+	return {
+		type: 'SET_PRODUCTS',
+		payload: {
+			products: products
 		}
 	};
 }

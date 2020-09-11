@@ -5,6 +5,7 @@ const User = require('../models/userModel');
 const { authUser, authAdmin, authMaster } = require('../authMiddleware');
 const { canEditOrDeleteProduct } = require('../permissions/productPermissions');
 const { Mongoose } = require('mongoose');
+const { ROLES } = require('../frontend/src/utils/data');
 
 router.get('/', async (req, res) => {
 	const itemsPerPage = 8;
@@ -51,7 +52,7 @@ router.post('/cart', authUser, verifyProductsSyntax, (req, res) => {
 		.catch(e => res.send(e));
 });
 
-router.post('/cart', authUser, verifyProductsSyntax, (req, res) => {
+router.get('/cart', authUser, verifyProductsSyntax, (req, res) => {
 	User.findById(req.user.id)
 		.then(user => res.send(user.cart))
 		.catch(e => res.send(e));
@@ -61,8 +62,10 @@ router.post('/new-product', authAdmin, (req, res) => {
 	const newProduct = new Product({
 		name: req.body.name,
 		price: req.body.price,
+		description: req.body.description,
 		category: req.body.category,
-		imagePath: req.body.imagePath
+		imagePath: req.body.imagePath,
+		isDefault: req.user.role === ROLES.MASTER && req.body.isDefault
 	});
 	newProduct
 		.save()
@@ -76,13 +79,14 @@ router.patch(
 	setProduct,
 	authEditOrDeleteProduct,
 	(req, res) => {
-		const [name, price, category, imagePath] = [
+		const [name, price, description, category, imagePath] = [
 			req.body.name,
 			req.body.price,
+			req.body.description,
 			req.body.category,
 			req.body.imagePath
 		];
-		if (!name || !price || !category || !imagePath) return res.sendStatus(400);
+		if (!name || !price || !category) return res.sendStatus(400);
 
 		Product.findByIdAndUpdate(req.product.id, {
 			name: name,
@@ -114,20 +118,6 @@ router.delete(
 		res.send('Successfully deleted product.');
 	}
 );
-
-router.post('/new-default-product', authMaster, (req, res) => {
-	const newProduct = new Product({
-		name: req.body.name,
-		price: req.body.price,
-		category: req.body.category,
-		imagePath: req.body.imagePath,
-		isDefault: true
-	});
-	newProduct
-		.save()
-		.then(() => res.send('Product added!'))
-		.catch(e => res.send(e));
-});
 
 function setProduct(req, res, next) {
 	Product.findById(req.params.productId)

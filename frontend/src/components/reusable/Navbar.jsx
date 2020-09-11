@@ -110,7 +110,7 @@ function NavItems(props) {
 								alt="store"
 								src={ChartIcon}
 							/>
-							<p className="hide-mobile">Admin Analytics</p>
+							<p className="hide-mobile">Statistics</p>
 						</Link>
 					</li>
 				</>

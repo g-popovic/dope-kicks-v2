@@ -131,6 +131,10 @@
 	margin-bottom: 2rem;
 	text-align: left;
 
+	a {
+		text-decoration: none;
+	}
+
 	&:last-child {
 		margin-bottom: none;
 	}
@@ -138,6 +142,10 @@
 	.product-name {
 		font-size: 1.3em;
 		margin: 1.1rem 0 0.5rem;
+		white-space: nowrap;
+		max-width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.product-price {
@@ -166,7 +174,7 @@
 	width: 100%;
 
 	object-fit: cover;
-	object-position: 0 90%;
+	object-position: center;
 	border-radius: $borderRadius;
 }
 

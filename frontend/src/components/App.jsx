@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { AuthRoute, UnauthRoute } from './authRoutes/ProtectedRoute';
+import { AuthRoute, UnauthRoute, AdminRoute } from './authRoutes/ProtectedRoute';
 
 import Homepage from './homePage/Homepage';
 import AdminPage from './adminStatsPage/AdminPage';
 import LoginPage from './loginPage/LoginPage';
 import CheckoutPage from './checkoutPage/CheckoutPage';
+import ProductDetails from './productDetailsPage/ProductPage';
 
 import { useDispatch, batch } from 'react-redux';
 import { authLogin, authLogout, setRole } from '../redux/actions';
@@ -46,7 +47,8 @@ function App() {
 				<UnauthRoute path="/login" component={LoginPage} />
 				<AuthRoute exact path="/" component={Homepage} />
 				<AuthRoute path="/cart" component={CheckoutPage} />
-				<AuthRoute path="/admin" component={AdminPage} />
+				<AdminRoute path="/admin" component={AdminPage} />
+				<AdminRoute path="/product/:id" component={ProductDetails} />
 				<h1>Page not found: Error 404</h1>
 			</Switch>
 		</Router>

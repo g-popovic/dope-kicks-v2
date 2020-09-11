@@ -17,7 +17,8 @@ function LabeledInput(props) {
 						: 'text'
 				}
 				autoComplete="off"
-				placeholder={props.placeholder}></input>
+				placeholder={props.placeholder}
+				maxLength={props.maxLength || ''}></input>
 		</div>
 	);
 }

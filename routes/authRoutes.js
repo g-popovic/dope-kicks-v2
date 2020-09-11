@@ -10,7 +10,11 @@ router.get(
 );
 
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-	res.redirect('http://localhost:3000');
+	res.redirect(
+		process.env.NODE_ENV === 'production'
+			? process.env.FRONTEND_URL
+			: 'http://localhost:3000'
+	);
 });
 
 router.post('/register', async (req, res) => {

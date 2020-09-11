@@ -3,8 +3,13 @@ import ProductButtons from '../homePage/ProductButtons';
 
 import Navbar from '../reusable/Navbar';
 import EditProductPanel from '../editProduct/EditProductPanel';
+import { useParams } from 'react-router-dom';
 
-function ProductPage(props) {
+function ProductPage() {
+	let { id } = useParams;
+
+	console.log(id);
+
 	return (
 		<>
 			<Navbar />

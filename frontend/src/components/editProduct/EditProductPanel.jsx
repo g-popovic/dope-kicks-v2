@@ -1,17 +1,75 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import LabeledInput from '../reusable/LabeledInput';
 import CategoryDropdown from '../reusable/CategoryDropdown';
-import UploadIcon from '../../images/cloud_upload-24px.svg';
 import CloseIcon from '../../images/close_black-24px.svg';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleEditPanel } from '../../redux/actions';
+import axiosApp from '../../utils/axiosConfig';
 
 function EditProductPanel() {
-	const isEditPanelOpen = useSelector(state => state.isEditPanelOpen);
+	const editPanelState = useSelector(state => state.editPanelState);
 	const dispatch = useDispatch();
+	const isNewProduct = editPanelState === 'new';
 
-	return !isEditPanelOpen ? null : (
+	const [name, setName] = useState('');
+	const [price, setPrice] = useState('');
+	const [description, setDescription] = useState('');
+	const [imagePath, setImagePath] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		setName(editPanelState.name || '');
+		setPrice(editPanelState.price || '');
+		setDescription(editPanelState.description || '');
+		setImagePath(editPanelState.imagePath || '');
+	}, [editPanelState]);
+
+	function setImgToDefault(e) {
+		e.target.src = require('../../images/default_image.png');
+	}
+
+	async function createProduct(e) {
+		e.preventDefault();
+		setIsLoading(true);
+
+		try {
+			const data = {
+				name,
+				price,
+				description,
+				imagePath,
+				category: 'running'
+			};
+			await axiosApp.post('/products/new-product', data);
+		} catch (err) {
+			console.log(err);
+		}
+		setIsLoading(false);
+	}
+
+	async function updateProduct(e) {
+		e.preventDefault();
+		setIsLoading(true);
+
+		try {
+			const data = {
+				name,
+				price,
+				description,
+				imagePath,
+				category: 'running'
+			};
+			await axiosApp.patch(`/products/${editPanelState._id}`, data);
+
+			dispatch(toggleEditPanel());
+		} catch (err) {
+			console.log(err);
+		}
+		setIsLoading(false);
+	}
+
+	return !editPanelState ? null : (
 		<div
 			id="edit-panel-background"
 			className="edit-product-background"
@@ -27,60 +85,73 @@ function EditProductPanel() {
 					<img alt="close" src={CloseIcon} />
 				</button>
 				<div className="edit-product-right-panel">
-					<h1>Edit Product</h1>
-					<div className="edit-product-flex-container">
-						<div className="upload-image-container">
-							<div className="upload-image">
-								<img
-									src="https://images.nike.com/is/image/DotCom/315115_112?$NIKE_PWP_GRAY$&wid=600&hei=700"
-									alt="product"
-								/>
-								<label
-									// className="unselected"
-									htmlFor="product-image">
-									<img
-										className="upload-icon"
-										alt="upload"
-										src={UploadIcon}
-									/>
-								</label>
-							</div>
-							<label htmlFor="product-image">Product Image</label>
-							<input
-								type="file"
-								id="product-image"
-								name="product-image"
-							/>
-						</div>
-						<div className="edit-product-right-panel">
-							<LabeledInput
-								label="Product Name"
-								name="name"
-								placeholder="Name of product"
-							/>
-							<LabeledInput
-								label="Price (IN CENTS)"
-								name="price"
-								placeholder="Price of product"
-								inputType="number"
-							/>
-							<LabeledInput
-								label="Short Description"
-								name="description"
-								placeholder="Description of product"
-							/>
-							<CategoryDropdown />
-						</div>
-					</div>
+					<h1>{isNewProduct ? 'Add New Product' : 'Edit Product'}</h1>
 
-					<div className="product-edit-buttons">
-						<button
-							onClick={() => dispatch(toggleEditPanel())}
-							className="btn-secondary">
-							CANCEL
-						</button>
-						<button className="btn-primary">SAVE</button>
-					</div>
+					<form onSubmit={isNewProduct ? createProduct : updateProduct}>
+						<div className="edit-product-flex-container">
+							<div className="upload-image-container">
+								<div className="upload-image">
+									<img
+										className="product-image-preview"
+										src={imagePath || ''}
+										alt="product"
+										onError={setImgToDefault}
+									/>
+								</div>
+								<label htmlFor="product-image">Product Image</label>
+							</div>
+							<div className="edit-product-right-panel">
+								<LabeledInput
+									label="Product Name"
+									name="name"
+									placeholder="Name of product"
+									value={name}
+									onChange={e => setName(e.target.value)}
+									maxLength={25}
+								/>
+								<LabeledInput
+									label="Price (in USD)"
+									name="price"
+									placeholder="Price of product"
+									inputType="number"
+									value={price / 100 || ''}
+									onChange={e => setPrice(e.target.value * 100)}
+								/>
+								<LabeledInput
+									label="Short Description"
+									name="description"
+									placeholder="Leave blank for default description"
+									value={description}
+									onChange={e => setDescription(e.target.value)}
+								/>
+								<LabeledInput
+									label="Image URL Link"
+									name="img-link"
+									placeholder="Leave blank for default image"
+									value={imagePath}
+									onChange={e => setImagePath(e.target.value)}
+								/>
+
+								<CategoryDropdown />
+							</div>
+						</div>
+
+						<div className="product-edit-buttons">
+							<button
+								onClick={() => dispatch(toggleEditPanel())}
+								className="btn-secondary">
+								CANCEL
+							</button>
+							<button
+								type="submit"
+								className={
+									'btn-primary' +
+									(isLoading ? ' btn-primary-loading' : '')
+								}>
+								SAVE
+							</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

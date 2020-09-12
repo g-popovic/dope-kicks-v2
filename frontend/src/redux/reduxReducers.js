@@ -51,10 +51,20 @@ function productsReducer(state = 'loading', action) {
 	}
 }
 
+function adminStatsReducer(state = 'loading', action) {
+	switch (action.type) {
+		case 'SET_STATS':
+			return action.payload.stats;
+		default:
+			return state;
+	}
+}
+
 export default combineReducers({
 	isNavOpen: navOpenReducer,
 	isAuthenticated: loggedInReducer,
 	editPanelState: editPanelReducer,
 	userRole: userRoleReducer,
-	products: productsReducer
+	products: productsReducer,
+	adminStats: adminStatsReducer
 });

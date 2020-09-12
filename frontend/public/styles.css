@@ -1585,6 +1585,20 @@ input::-webkit-inner-spin-button {
           transform: translateX(-50%);
 }
 
+.is-default {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: 1rem;
+  margin-top: -1rem;
+}
+
 @media only screen and (min-width: 1000px) {
   .exit-edit-product {
     top: 2rem;

@@ -29,7 +29,7 @@ export function setRole(role) {
 	return {
 		type: 'SET_ROLE',
 		payload: {
-			role: role
+			role
 		}
 	};
 }
@@ -38,7 +38,16 @@ export function setProducts(products) {
 	return {
 		type: 'SET_PRODUCTS',
 		payload: {
-			products: products
+			products
+		}
+	};
+}
+
+export function setAdminStats(stats) {
+	return {
+		type: 'SET_STATS',
+		payload: {
+			stats
 		}
 	};
 }

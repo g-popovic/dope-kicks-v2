@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Chart from 'react-apexcharts';
 
-function BestsellersChart() {
+function BestsellersChart(props) {
 	const [series, setSeries] = useState([
 		{
 			name: 'Times Sold',
-			data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380].reverse()
+			data: props.stats.map(item => item.timesSold)
 		}
 	]);
 	const [options, setOptions] = useState({
@@ -38,18 +38,7 @@ function BestsellersChart() {
 			}
 		},
 		xaxis: {
-			categories: [
-				'South Korea',
-				'Canada',
-				'United Kingdom',
-				'Netherlands',
-				'Italy',
-				'France',
-				'Japan',
-				'United States',
-				'China',
-				'Germany'
-			]
+			categories: props.stats.map(item => item.name)
 		},
 		yaxis: {
 			labels: { show: false }

@@ -78,12 +78,13 @@ router.patch(
 	setProduct,
 	authEditOrDeleteProduct,
 	(req, res) => {
-		const [name, price, description, category, imagePath] = [
+		const [name, price, description, category, imagePath, isDefault] = [
 			req.body.name,
 			req.body.price,
 			req.body.description,
 			req.body.category,
-			req.body.imagePath
+			req.body.imagePath,
+			req.user.role === ROLES.MASTER && req.body.isDefault
 		];
 		if (!name || !price || !category) return res.sendStatus(400);
 
@@ -92,7 +93,8 @@ router.patch(
 			price,
 			description,
 			category,
-			imagePath
+			imagePath,
+			isDefault
 		})
 			.then(() => res.send('Updated product.'))
 			.catch(e => res.send(e));

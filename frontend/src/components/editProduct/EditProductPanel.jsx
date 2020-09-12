@@ -5,9 +5,11 @@ import CloseIcon from '../../images/close_black-24px.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleEditPanel } from '../../redux/reduxActions';
 import axiosApp from '../../utils/axiosConfig';
+import { ROLES } from '../../utils/data';
 
 function EditProductPanel() {
 	const editPanelState = useSelector(state => state.editPanelState);
+	const userRole = useSelector(state => state.userRole);
 	const dispatch = useDispatch();
 	const isNewProduct = editPanelState === 'new';
 
@@ -16,6 +18,7 @@ function EditProductPanel() {
 	const [description, setDescription] = useState('');
 	const [imagePath, setImagePath] = useState('');
 	const [category, setCategory] = useState('');
+	const [isDefault, setIsDefault] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
@@ -23,6 +26,8 @@ function EditProductPanel() {
 		setPrice(editPanelState.price || '');
 		setDescription(editPanelState.description || '');
 		setImagePath(editPanelState.imagePath || '');
+		setCategory(editPanelState.category || '');
+		setIsDefault(Boolean(editPanelState.isDefault));
 	}, [editPanelState]);
 
 	function setImgToDefault(e) {
@@ -45,6 +50,7 @@ function EditProductPanel() {
 			dispatch(toggleEditPanel());
 		} catch (err) {
 			console.log(err);
+			alert('There was an error.');
 		}
 		setIsLoading(false);
 	}
@@ -66,6 +72,7 @@ function EditProductPanel() {
 			dispatch(toggleEditPanel());
 		} catch (err) {
 			console.log(err);
+			alert('There was an error.');
 		}
 		setIsLoading(false);
 	}
@@ -76,6 +83,7 @@ function EditProductPanel() {
 			dispatch(toggleEditPanel());
 		} catch (e) {
 			console.log(e);
+			alert('There was an error.');
 		}
 	}
 
@@ -147,9 +155,23 @@ function EditProductPanel() {
 									onChange={e => setImagePath(e.target.value)}
 								/>
 
+								{userRole !== ROLES.MASTER ? null : (
+									<div className="is-default">
+										<input
+											id="is-default"
+											type="checkbox"
+											checked={isDefault}
+											onChange={() =>
+												setIsDefault(prev => !prev)
+											}></input>
+										<label for="is-default">Is default</label>
+									</div>
+								)}
+
 								<select
 									onChange={e => setCategory(e.target.value)}
-									className="btn-category">
+									className="btn-category"
+									value={category}>
 									<option value="">Select Category</option>
 									<option value="running">Running</option>
 									<option value="lifestyle">Lifestyle</option>

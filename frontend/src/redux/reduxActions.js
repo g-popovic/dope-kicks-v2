@@ -19,12 +19,6 @@ export function authLogin() {
 	};
 }
 
-export function authLogout() {
-	return {
-		type: 'LOGOUT'
-	};
-}
-
 export function setRole(role) {
 	return {
 		type: 'SET_ROLE',
@@ -48,6 +42,34 @@ export function setAdminStats(stats) {
 		type: 'SET_STATS',
 		payload: {
 			stats
+		}
+	};
+}
+
+export function setCart(cart) {
+	return {
+		type: 'SET_CART',
+		payload: {
+			cart
+		}
+	};
+}
+
+export function addToCart(product) {
+	return {
+		type: 'ADD_TO_CART',
+		payload: {
+			product
+		}
+	};
+}
+
+export function changeAmount(amount, id) {
+	return {
+		type: 'CHANGE_AMOUNT',
+		payload: {
+			amount,
+			id
 		}
 	};
 }

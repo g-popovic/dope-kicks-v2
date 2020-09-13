@@ -7,29 +7,22 @@ import Burger from '../../images/menu-24px.svg';
 import ChartIcon from '../../images/insert_chart-white-18dp.svg';
 import CloseIcon from '../../images/close-24px.svg';
 
-import { useSelector, useDispatch, batch } from 'react-redux';
-import {
-	toggleNavOpen,
-	toggleEditPanel,
-	authLogout,
-	setRole
-} from '../../redux/reduxActions';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleNavOpen, toggleEditPanel, setRole } from '../../redux/reduxActions';
 import axiosApp from '../../utils/axiosConfig';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
 	const isOpen = useSelector(state => state.isNavOpen);
 	const userRole = useSelector(state => state.userRole);
+	const cart = useSelector(state => state.cart);
 	const dispatch = useDispatch();
 
 	async function logout() {
 		try {
 			await axiosApp.post('/auth/logout');
 
-			batch(() => {
-				dispatch(authLogout());
-				dispatch(setRole(null));
-			});
+			dispatch(setRole(null));
 		} catch (e) {
 			console.log(e);
 		}
@@ -50,6 +43,7 @@ function Navbar() {
 					<NavItems
 						userRole={userRole}
 						toggleNewProduct={() => dispatch(toggleEditPanel())}
+						cartCount={cart === 'loading' ? '' : cart.length}
 						logout={logout}
 					/>
 				</ul>
@@ -75,6 +69,7 @@ function Navbar() {
 						<NavItems
 							userRole={userRole}
 							toggleNewProduct={() => dispatch(toggleEditPanel())}
+							cartCount={cart === 'loading' ? '' : cart.length}
 							logout={logout}
 						/>
 					</ul>
@@ -117,7 +112,7 @@ function NavItems(props) {
 			) : null}
 			<li>
 				<Link to="/cart">
-					<Cart amount={3} />
+					<Cart amount={props.cartCount} />
 				</Link>
 			</li>
 			<li onClick={props.logout}>

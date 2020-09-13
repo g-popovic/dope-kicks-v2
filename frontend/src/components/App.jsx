@@ -8,13 +8,15 @@ import LoginPage from './loginPage/LoginPage';
 import CheckoutPage from './checkoutPage/CheckoutPage';
 import ProductDetails from './productDetailsPage/ProductPage';
 
-import { useDispatch, batch } from 'react-redux';
-import { authLogin, authLogout, setRole } from '../redux/reduxActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { setRole, setCart } from '../redux/reduxActions';
 import axiosApp from '../utils/axiosConfig';
 import axios from 'axios';
 
 function App() {
 	const dispatch = useDispatch();
+	const cart = useSelector(state => state.cart);
+	const editPanelState = useSelector(state => state.editPanelState);
 
 	useEffect(() => {
 		const source = axios.CancelToken.source();
@@ -25,21 +27,72 @@ function App() {
 					cancelToken: source.token
 				});
 
-				batch(() => {
-					dispatch(authLogin());
-					dispatch(setRole(result.data.role));
-				});
+				dispatch(setRole(result.data.role));
 			} catch (err) {
-				dispatch(authLogout());
+				dispatch(setRole(null));
+			}
+		}
+
+		async function fetchCart() {
+			try {
+				const result = await axiosApp.get('/products/cart', {
+					cancelToken: source.token
+				});
+
+				dispatch(setCart(result.data));
+			} catch (err) {
+				console.log(err);
 			}
 		}
 
 		checkStatus();
+		fetchCart();
 
 		return () => {
 			source.cancel();
 		};
 	}, []);
+
+	useEffect(() => {
+		const source = axios.CancelToken.source();
+
+		async function updateCart() {
+			try {
+				await axiosApp.post(
+					'/products/cart',
+					{
+						products: cart.map(item => {
+							return {
+								product: item.product._id,
+								amount: item.amount
+							};
+						})
+					},
+					{
+						cancelToken: source.token
+					}
+				);
+			} catch (err) {
+				console.log(err);
+			}
+		}
+
+		if (cart !== 'loading') updateCart();
+
+		return () => {
+			source.cancel();
+		};
+	}, [cart]);
+
+	useEffect(() => {
+		const body = document.querySelector('body');
+
+		if (editPanelState) {
+			body.classList.add('no-overflow');
+		} else {
+			body.classList.remove('no-overflow');
+		}
+	}, [editPanelState]);
 
 	return (
 		<Router>

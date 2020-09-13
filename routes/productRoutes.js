@@ -51,8 +51,10 @@ router.post('/cart', authUser, verifyProductsSyntax, (req, res) => {
 		.catch(e => res.send(e));
 });
 
-router.get('/cart', authUser, verifyProductsSyntax, (req, res) => {
+router.get('/cart', authUser, (req, res) => {
 	User.findById(req.user.id)
+		.populate('cart.product')
+		.exec()
 		.then(user => res.send(user.cart))
 		.catch(e => res.send(e));
 });
@@ -151,7 +153,10 @@ function escapeRegex(text) {
 
 function verifyProductsSyntax(req, res, next) {
 	const products = req.body.products;
-	if (!products || !products[0].product || !products[0].amount)
+	if (
+		products == null ||
+		(products.length > 0 && (!products[0].product || !products[0].amount))
+	)
 		return res.sendStatus(400);
 
 	next();

@@ -164,7 +164,9 @@ function EditProductPanel() {
 											onChange={() =>
 												setIsDefault(prev => !prev)
 											}></input>
-										<label for="is-default">Is default</label>
+										<label htmlFor="is-default">
+											Is default
+										</label>
 									</div>
 								)}
 

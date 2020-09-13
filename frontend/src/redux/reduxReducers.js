@@ -22,18 +22,7 @@ function editPanelReducer(state = false, action) {
 	}
 }
 
-function loggedInReducer(state = 'loading', action) {
-	switch (action.type) {
-		case 'LOGIN':
-			return true;
-		case 'LOGOUT':
-			return false;
-		default:
-			return state;
-	}
-}
-
-function userRoleReducer(state = null, action) {
+function userRoleReducer(state = 'loading', action) {
 	switch (action.type) {
 		case 'SET_ROLE':
 			return action.payload.role;
@@ -60,11 +49,38 @@ function adminStatsReducer(state = 'loading', action) {
 	}
 }
 
+function cartReducer(state = 'loading', action) {
+	switch (action.type) {
+		case 'SET_CART':
+			return action.payload.cart;
+		case 'ADD_TO_CART':
+			if (state === 'loading') return state;
+
+			if (state.some(item => item.product._id === action.payload.product._id))
+				return state;
+
+			return [...state, action.payload.product];
+		case 'CHANGE_AMOUNT':
+			if (state === 'loading') return state;
+
+			let newCart = state.map(item => {
+				if (action.payload.id !== item.product._id) return item;
+
+				const amount = Number(action.payload.amount);
+				item.amount = amount < 1 ? 1 : amount > 100 ? 100 : amount;
+				return item;
+			});
+			return newCart;
+		default:
+			return state;
+	}
+}
+
 export default combineReducers({
 	isNavOpen: navOpenReducer,
-	isAuthenticated: loggedInReducer,
 	editPanelState: editPanelReducer,
 	userRole: userRoleReducer,
 	products: productsReducer,
-	adminStats: adminStatsReducer
+	adminStats: adminStatsReducer,
+	cart: cartReducer
 });

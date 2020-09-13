@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import LabeledInput from '../reusable/LabeledInput';
 import GoogleLogo from '../../images/google-icon.svg';
 import LoginBackground from '../../images/Nike Sneakers Background.jpg';
-import { useDispatch, batch } from 'react-redux';
-import { authLogin, setRole } from '../../redux/reduxActions';
+import { useDispatch } from 'react-redux';
+import { setRole } from '../../redux/reduxActions';
 import axiosApp from '../../utils/axiosConfig';
 import { backend } from '../../utils/endpoints';
+import { ROLES } from '../../utils/data';
 
 function LoginPage() {
 	const dispatch = useDispatch();
@@ -46,7 +47,7 @@ function LoginPage() {
 			await axiosApp.post('/auth/login', data);
 			const result = await axiosApp.get('/auth/status');
 
-			updateLoginState(result.data.role);
+			dispatch(setRole(result.data.role));
 		} catch (err) {
 			if (err.response && err.response.status === 401) {
 				setErrorMessage(err.response.data);
@@ -56,13 +57,6 @@ function LoginPage() {
 		}
 
 		setBtnLoading(false);
-	}
-
-	function updateLoginState(role) {
-		batch(() => {
-			dispatch(authLogin());
-			dispatch(setRole(role));
-		});
 	}
 
 	async function register(e) {
@@ -89,11 +83,12 @@ function LoginPage() {
 				password
 			};
 			const result = await axiosApp.post('/auth/register', data);
-
-			updateLoginState(result.data.role);
+			dispatch(setRole(ROLES.BASIC));
 		} catch (err) {
 			if (err.response && err.response.status === 403) {
 				setErrorMessage(err.response.data);
+			} else {
+				setErrorMessage('Something went wrong.');
 			}
 			console.log(err);
 		}

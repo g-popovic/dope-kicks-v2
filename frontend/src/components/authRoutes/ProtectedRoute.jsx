@@ -5,12 +5,12 @@ import { ROLES } from '../../utils/data';
 import { useSelector } from 'react-redux';
 
 export function AuthRoute(props) {
-	const isAuthenticated = useSelector(state => state.isAuthenticated);
+	const userRole = useSelector(state => state.userRole);
 	const Component = props.component;
 
-	return isAuthenticated === 'loading' ? (
+	return userRole === 'loading' ? (
 		<h1>Loading...</h1>
-	) : isAuthenticated ? (
+	) : userRole ? (
 		<Component />
 	) : (
 		<Redirect to={{ pathname: '/login' }} />
@@ -18,12 +18,12 @@ export function AuthRoute(props) {
 }
 
 export function UnauthRoute(props) {
-	const isAuthenticated = useSelector(state => state.isAuthenticated);
+	const userRole = useSelector(state => state.userRole);
 	const Component = props.component;
 
-	return isAuthenticated === 'loading' ? (
+	return userRole === 'loading' ? (
 		<h1>Loading...</h1>
-	) : !isAuthenticated ? (
+	) : !userRole ? (
 		<Component />
 	) : (
 		<Redirect to={{ pathname: '/' }} />
@@ -32,12 +32,11 @@ export function UnauthRoute(props) {
 
 export function AdminRoute(props) {
 	const userRole = useSelector(state => state.userRole);
-	const isAuthenticated = useSelector(state => state.isAuthenticated);
 	const Component = props.component;
 
-	return isAuthenticated === 'loading' ? (
+	return userRole === 'loading' ? (
 		<h1>Loading...</h1>
-	) : isAuthenticated ? (
+	) : userRole ? (
 		userRole === ROLES.ADMIN || userRole === ROLES.MASTER ? (
 			<Component />
 		) : (

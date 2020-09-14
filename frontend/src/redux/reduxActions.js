@@ -73,3 +73,12 @@ export function changeAmount(amount, id) {
 		}
 	};
 }
+
+export function setQueries(queries) {
+	return {
+		type: 'SET_QUERIES',
+		payload: {
+			queries
+		}
+	};
+}

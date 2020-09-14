@@ -14,7 +14,9 @@ function ProductButtons(props) {
 	const isAdmin =
 		props.userRole === ROLES.ADMIN || props.userRole === ROLES.MASTER;
 	const [isAdded, setIsAdded] = useState(
-		cart.some(item => item.product._id === props.product._id)
+		isCartLoading
+			? false
+			: cart.some(item => item.product._id === props.product._id)
 	);
 
 	function openEditPanel() {

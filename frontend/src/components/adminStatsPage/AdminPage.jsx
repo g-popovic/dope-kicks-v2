@@ -5,14 +5,15 @@ import GeneralStats from './GeneralStats';
 
 import Navbar from '../reusable/Navbar';
 import EditProductPanel from '../editProduct/EditProductPanel';
-import axiosApp from '../../utils/axiosConfig';
 import axios from 'axios';
+import axiosApp from '../../utils/axiosConfig';
 import { useSelector, useDispatch } from 'react-redux';
 import { setAdminStats } from '../../redux/reduxActions';
 
 function AdminPage() {
-	const stats = useSelector(state => state.adminStats);
 	const dispatch = useDispatch();
+	const stats = useSelector(state => state.adminStats);
+	const [willUpdateCharts, setWillUpdateCharts] = useState(false);
 
 	useEffect(() => {
 		const source = axios.CancelToken.source();
@@ -20,9 +21,13 @@ function AdminPage() {
 		async function fetchStats() {
 			try {
 				const result = await axios.all([
-					axiosApp.get('/admin/general-stats'),
-					axiosApp.get('/admin/bestsellers'),
-					axiosApp.get('/admin/sales-stats')
+					axiosApp.get('/admin/general-stats', {
+						cancelToken: source.token
+					}),
+					axiosApp.get('/admin/bestsellers', {
+						cancelToken: source.token
+					}),
+					axiosApp.get('/admin/sales-stats', { cancelToken: source.token })
 				]);
 
 				const data = {
@@ -31,7 +36,8 @@ function AdminPage() {
 					recentSales: result[2].data
 				};
 
-				dispatch(setAdminStats(data));
+				if (JSON.stringify(stats) !== JSON.stringify(data))
+					dispatch(setAdminStats(data));
 			} catch (err) {
 				console.log(err);
 			}
@@ -44,19 +50,30 @@ function AdminPage() {
 		};
 	}, []);
 
+	// ApexCharts are kinda weird so they have to be refreshed manually
+	useEffect(() => {
+		setWillUpdateCharts(true);
+	}, [stats]);
+
+	useEffect(() => {
+		if (willUpdateCharts) setWillUpdateCharts(false);
+	}, [willUpdateCharts]);
+
 	return stats === 'loading' ? (
 		<h1>Loading...</h1>
 	) : (
 		<>
 			<Navbar />
 			<EditProductPanel />
-			<div className="admin-page-container">
-				<BestsellersChart stats={stats.bestsellers} />
-				<div className="admin-right-panel">
-					<GeneralStats stats={stats.general} />
-					<RecentSalesChart stats={stats.recentSales} />
+			{willUpdateCharts ? null : (
+				<div className="admin-page-container">
+					<BestsellersChart stats={stats.bestsellers} />
+					<div className="admin-right-panel">
+						<GeneralStats stats={stats.general} />
+						<RecentSalesChart stats={stats.recentSales} />
+					</div>
 				</div>
-			</div>
+			)}
 		</>
 	);
 }

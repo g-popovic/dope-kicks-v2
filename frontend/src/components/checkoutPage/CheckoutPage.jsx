@@ -4,7 +4,7 @@ import CartTableItem from './CartTableItem';
 import Navbar from '../reusable/Navbar';
 import EditProductPanel from '../editProduct/EditProductPanel';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCart } from '../../redux/reduxActions';
+import { setCart, setAdminStats } from '../../redux/reduxActions';
 import axiosApp from '../../utils/axiosConfig';
 import axios from 'axios';
 
@@ -35,6 +35,7 @@ function CheckoutPage() {
 				axiosApp.post('/products/cart', { products: [] })
 			]);
 			dispatch(setCart([]));
+			// dispatch(setAdminStats(fetchStats(null)));
 			console.log('Purchase successful.');
 		} catch (err) {
 			console.log(err);

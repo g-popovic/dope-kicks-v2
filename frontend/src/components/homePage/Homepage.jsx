@@ -6,27 +6,44 @@ import EditProductPanel from '../editProduct/EditProductPanel';
 import axiosApp from '../../utils/axiosConfig';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { setProducts } from '../../redux/reduxActions';
+import { setProducts, setQueries } from '../../redux/reduxActions';
 
 function Homepage() {
-	const [query, setQuery] = useState('');
-	const [minPrice, setMinPrice] = useState('');
-	const [maxPrice, setMaxPrice] = useState('');
-	const [category, setCategory] = useState('');
-
 	const dispatch = useDispatch();
 	const products = useSelector(state => state.products);
 	const userRole = useSelector(state => state.userRole);
 	const editPanelState = useSelector(state => state.editPanelState);
+	const queries = useSelector(state => state.queries);
+
+	const [query, setQuery] = useState(queries.query || '');
+	const [minPrice, setMinPrice] = useState(queries.minPrice || '');
+	const [maxPrice, setMaxPrice] = useState(queries.maxPrice || '');
+	const [category, setCategory] = useState(queries.category || '');
+	const [page, setPage] = useState(queries.page || 1);
+	const [totalPages, setTotalPages] = useState(null);
+
+	const pages = [];
+	for (let i = 0; i < totalPages; i++) {
+		pages.push(
+			<li
+				onClick={() => setPageFilter(i + 1)}
+				className={page === i + 1 ? 'active-page' : ''}>
+				<a>{i + 1}</a>
+			</li>
+		);
+	}
 
 	useEffect(() => {
 		const source = axios.CancelToken.source();
+		const itemsPerPage = 1;
+
+		dispatch(setProducts('loading'));
 
 		async function getProducts() {
 			// get products
 			try {
 				const result = await axiosApp.get(
-					`/products/?query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}&category=${category}`,
+					`/products/?itemsPerPage=${itemsPerPage}&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}&category=${category}&page=${page}`,
 					{
 						cancelToken: source.token
 					}
@@ -34,7 +51,9 @@ function Homepage() {
 
 				console.log(result.data);
 				dispatch(setProducts(result.data.results));
+				setTotalPages(result.data.pages);
 			} catch (err) {
+				dispatch(setProducts([]));
 				console.log(err);
 			}
 		}
@@ -44,7 +63,24 @@ function Homepage() {
 		return () => {
 			source.cancel();
 		};
-	}, [query, minPrice, maxPrice, category, editPanelState]);
+	}, [query, minPrice, maxPrice, category, editPanelState, page]);
+
+	useEffect(() => {
+		console.log('called dispatcj');
+		dispatch(
+			setQueries({
+				query,
+				minPrice,
+				maxPrice,
+				category,
+				page
+			})
+		);
+	}, [query, minPrice, maxPrice, category, page]);
+
+	function setPageFilter(value) {
+		setPage(value > totalPages ? totalPages : value || 1);
+	}
 
 	return (
 		<>
@@ -123,21 +159,13 @@ function Homepage() {
 				</div>
 
 				<div className="page-selection">
-					<a className="prev-page" href="">
+					<a className="prev-page" onClick={() => setPageFilter(page - 1)}>
 						Previous
 					</a>
-					<ul>
-						<li>
-							<a>1</a>
-						</li>
-						<li className="active-page">
-							<a>2</a>
-						</li>
-						<li>
-							<a>3</a>
-						</li>
-					</ul>
-					<a className="next-page" href="">
+					<div className="pages-container">
+						<ul>{pages}</ul>
+					</div>
+					<a className="next-page" onClick={() => setPageFilter(page + 1)}>
 						Next
 					</a>
 				</div>

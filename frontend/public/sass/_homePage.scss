@@ -4,6 +4,8 @@
 	width: 100%;
 	background: white;
 	margin-top: $navMobileHeight;
+	min-height: 100vh;
+	box-sizing: border-box;
 	padding: 2rem 0 3rem;
 }
 
@@ -128,7 +130,7 @@
 }
 
 .product {
-	margin-bottom: 2rem;
+	margin-bottom: 3rem;
 	text-align: left;
 
 	a {
@@ -267,10 +269,17 @@
 		text-align: right;
 	}
 
+	.pages-container {
+		flex-basis: 60%;
+		overflow-x: auto;
+	}
+
 	ul {
 		display: flex;
 		justify-content: center;
-		margin: 0 1.5rem;
+		margin: auto;
+		width: fit-content;
+		align-items: stretch;
 
 		li {
 			margin: 0 0.5rem;
@@ -280,10 +289,18 @@
 			height: 2.5rem;
 			padding: 0.6rem;
 			background: $lightGray;
+			cursor: pointer;
+			position: relative;
+			flex-shrink: 0;
 
 			a {
 				text-decoration: none;
 				margin-top: 0.2rem;
+
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translateX(-50%) translateY(-65%);
 			}
 		}
 

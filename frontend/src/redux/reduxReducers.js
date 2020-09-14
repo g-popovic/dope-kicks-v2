@@ -76,11 +76,21 @@ function cartReducer(state = 'loading', action) {
 	}
 }
 
+function queriesReducer(state = {}, action) {
+	switch (action.type) {
+		case 'SET_QUERIES':
+			return action.payload.queries;
+		default:
+			return state;
+	}
+}
+
 export default combineReducers({
 	isNavOpen: navOpenReducer,
 	editPanelState: editPanelReducer,
 	userRole: userRoleReducer,
 	products: productsReducer,
 	adminStats: adminStatsReducer,
-	cart: cartReducer
+	cart: cartReducer,
+	queries: queriesReducer
 });

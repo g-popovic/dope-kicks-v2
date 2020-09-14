@@ -4,14 +4,13 @@ const Order = require('../models/orderModel');
 const User = require('../models/userModel');
 const { authUser, authAdmin } = require('../authMiddleware');
 const { canEditOrDeleteProduct } = require('../permissions/productPermissions');
-const { ROLES } = require('../config/data');
+const { ROLES, CATEGORIES } = require('../config/data');
 
 router.get('/', async (req, res) => {
-	const itemsPerPage = 8;
+	const itemsPerPage = parseInt(req.query.itemsPerPage);
 	const page = parseInt(req.query.page) || 1;
 
 	const startIndex = (page - 1) * itemsPerPage;
-	const endIndex = page * itemsPerPage;
 
 	const result = {};
 
@@ -20,17 +19,19 @@ router.get('/', async (req, res) => {
 	const query = new RegExp(escapeRegex(req.query.query), 'gi');
 	const minPrice = req.query.minPrice || 0;
 	const maxPrice = req.query.maxPrice || 1000000000;
-	result.results = await Product.find({
+
+	const dbQuery = {
 		category: category,
 		name: query,
 		price: { $gte: minPrice, $lte: maxPrice }
-	})
+	};
+
+	result.results = await Product.find(dbQuery)
 		.limit(itemsPerPage)
 		.skip(startIndex)
 		.exec();
 
-	if (startIndex > 0) result.previous = page - 1;
-	if (endIndex < (await Product.countDocuments().exec())) result.next = page + 1;
+	result.pages = Math.ceil((await Product.countDocuments(dbQuery)) / itemsPerPage);
 
 	res.send(result);
 });
@@ -63,8 +64,8 @@ router.post('/new-product', authAdmin, (req, res) => {
 	const newProduct = new Product({
 		name: req.body.name,
 		price: req.body.price,
-		description: req.body.description,
-		category: req.body.category,
+		description: req.body.description || undefined,
+		category: req.body.category || CATEGORIES.RUNNING,
 		imagePath: req.body.imagePath,
 		isDefault: req.user.role === ROLES.MASTER && req.body.isDefault
 	});

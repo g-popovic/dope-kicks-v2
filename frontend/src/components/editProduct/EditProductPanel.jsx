@@ -5,7 +5,7 @@ import CloseIcon from '../../images/close_black-24px.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleEditPanel } from '../../redux/reduxActions';
 import axiosApp from '../../utils/axiosConfig';
-import { ROLES } from '../../utils/data';
+import { ROLES, CATEGORIES } from '../../utils/data';
 
 function EditProductPanel() {
 	const editPanelState = useSelector(state => state.editPanelState);
@@ -17,7 +17,7 @@ function EditProductPanel() {
 	const [price, setPrice] = useState('');
 	const [description, setDescription] = useState('');
 	const [imagePath, setImagePath] = useState('');
-	const [category, setCategory] = useState('');
+	const [category, setCategory] = useState(CATEGORIES.RUNNING);
 	const [isDefault, setIsDefault] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -174,10 +174,15 @@ function EditProductPanel() {
 									onChange={e => setCategory(e.target.value)}
 									className="btn-category"
 									value={category}>
-									<option value="">Select Category</option>
-									<option value="running">Running</option>
-									<option value="lifestyle">Lifestyle</option>
-									<option value="basketball">Basketball</option>
+									<option value={CATEGORIES.RUNNING}>
+										Running
+									</option>
+									<option value={CATEGORIES.LIFESTYLE}>
+										Lifestyle
+									</option>
+									<option value={CATEGORIES.BASKETBALL}>
+										Basketball
+									</option>
 								</select>
 							</div>
 						</div>

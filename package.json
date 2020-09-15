@@ -27,6 +27,8 @@
 		"passport-google-oauth20": "^2.0.0",
 		"passport-local": "^1.0.0",
 		"react-paypal-express-checkout": "^1.0.5",
-		"react-router-dom": "^5.2.0"
+		"react-router-dom": "^5.2.0",
+		"stripe": "^8.96.0",
+		"uuid": "^8.3.0"
 	}
 }

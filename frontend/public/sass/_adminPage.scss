@@ -63,6 +63,13 @@
 	background: white;
 	box-sizing: border-box;
 	padding-top: 40vh;
+
+	p {
+		font-size: 1.1rem;
+		width: 30rem;
+		max-width: 80vw;
+		margin: 0 auto;
+	}
 }
 
 @media only screen and (min-width: 1000px) {

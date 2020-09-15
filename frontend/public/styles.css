@@ -962,6 +962,13 @@ nav {
   padding-top: 40vh;
 }
 
+.become-admin-container p {
+  font-size: 1.1rem;
+  width: 30rem;
+  max-width: 80vw;
+  margin: 0 auto;
+}
+
 @media only screen and (min-width: 1000px) {
   .admin-page-container {
     -webkit-box-orient: horizontal;

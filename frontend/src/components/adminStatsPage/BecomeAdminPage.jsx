@@ -26,6 +26,13 @@ export default function BecomeAdminPage() {
 			<EditProductPanel />
 			<div className="become-admin-container">
 				<h1>Do you want to upgrade to Admin status?</h1>
+				<p>
+					This will allow you to create new products, edit existing ones
+					and the analytics page
+				</p>
+				<br />
+				<br />
+				<br />
 				<button
 					onClick={isLoading ? null : becomeAdmin}
 					className={

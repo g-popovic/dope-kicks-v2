@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CartTableItem from './CartTableItem';
 
 import Navbar from '../reusable/Navbar';
 import EditProductPanel from '../editProduct/EditProductPanel';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCart, setAdminStats } from '../../redux/reduxActions';
+import { setCart } from '../../redux/reduxActions';
 import axiosApp from '../../utils/axiosConfig';
 import axios from 'axios';
+import StripeCheckout from 'react-stripe-checkout';
 
 function CheckoutPage() {
 	const dispatch = useDispatch();
@@ -16,12 +17,16 @@ function CheckoutPage() {
 		convertToReadablePrice(
 			cart.reduce((total, item) => total + item.amount * item.product.price, 0)
 		);
+	const [isLoading, setIsLoading] = useState(false);
+	const publicStripeToken =
+		'pk_test_51HRa5mKDvtytb8inFLTYEJCOD0z05DIXv6a65HvHvsD5IjlDh31UQmqx1MRZFe0ybZWJNVBO6GooMjafXCYf4Nih00XLgKHxrH';
 
 	function convertToReadablePrice(price) {
 		return '$' + (Math.round(price) / 100).toFixed(2);
 	}
 
-	async function dummyPurchase() {
+	async function purchase(token) {
+		setIsLoading(true);
 		try {
 			const cartForBackend = cart.map(item => {
 				return {
@@ -30,16 +35,20 @@ function CheckoutPage() {
 				};
 			});
 
-			await axios.all([
-				axiosApp.post('/products/buy', { products: cartForBackend }),
+			const result = await axios.all([
+				axiosApp.post('/products/purchase', {
+					products: cartForBackend,
+					token
+				}),
 				axiosApp.post('/products/cart', { products: [] })
 			]);
 			dispatch(setCart([]));
-			// dispatch(setAdminStats(fetchStats(null)));
-			console.log('Purchase successful.');
+			alert('Purchase successful.');
 		} catch (err) {
+			alert('Oops! Something went wrong.');
 			console.log(err);
 		}
+		setIsLoading(false);
 	}
 
 	return cart === 'loading' ? (
@@ -89,11 +98,18 @@ function CheckoutPage() {
 								</p>
 							</div>
 
-							<button
-								onClick={dummyPurchase}
-								className="paypal-button btn-primary">
-								PURCHASE NOW
-							</button>
+							<StripeCheckout
+								stripeKey={publicStripeToken}
+								token={purchase}
+								name="Amazoon">
+								<button
+									className={
+										'paypal-button btn-primary' +
+										(isLoading ? ' btn-primary-loading' : '')
+									}>
+									PURCHASE NOW
+								</button>
+							</StripeCheckout>
 						</div>
 					</>
 				)}

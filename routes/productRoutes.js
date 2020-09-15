@@ -5,6 +5,8 @@ const User = require('../models/userModel');
 const { authUser, authAdmin } = require('../authMiddleware');
 const { canEditOrDeleteProduct } = require('../permissions/productPermissions');
 const { ROLES, CATEGORIES } = require('../config/data');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const { v4: uuid } = require('uuid');
 
 router.get('/', async (req, res) => {
 	const itemsPerPage = parseInt(req.query.itemsPerPage);
@@ -36,7 +38,58 @@ router.get('/', async (req, res) => {
 	res.send(result);
 });
 
-router.post('/buy', authUser, verifyProductsSyntax, (req, res) => {
+router.post('/purchase', authUser, verifyProductsSyntax, async (req, res) => {
+	const idempotencyKey = uuid();
+
+	const products = req.body.products;
+	const token = req.body.token;
+	let dbProducts;
+
+	try {
+		dbProducts = await Product.find({
+			_id: { $in: products.map(item => item.product) }
+		});
+	} catch (e) {
+		return res.send(e);
+	}
+
+	let totalPrice = 0;
+	products.forEach(item => {
+		totalPrice +=
+			dbProducts.find(product => product.id === item.product).price *
+			item.amount;
+	});
+
+	stripe.customers
+		.create({ email: token.email, source: token.id })
+		.then(customer => {
+			stripe.charges
+				.create(
+					{
+						amount: totalPrice,
+						currency: 'eur',
+						customer: customer.id,
+						description: dbProducts.length + ' products.'
+					},
+					{ idempotencyKey }
+				)
+				.then(() => {
+					new Order({
+						products: req.body.products,
+						buyerId: req.user.id
+					})
+						.save()
+						.then(() => res.send('Transaction successful.'))
+						.catch(err => res.send(err));
+				})
+				.catch(err => res.send(err));
+		})
+		.catch(err => res.send(err));
+
+	// Create order
+});
+
+router.post('/test-purchase', authUser, verifyProductsSyntax, (req, res) => {
 	new Order({
 		products: req.body.products,
 		buyerId: req.user.id
@@ -67,7 +120,7 @@ router.post('/new-product', authAdmin, (req, res) => {
 		description: req.body.description || undefined,
 		category: req.body.category || CATEGORIES.RUNNING,
 		imagePath: req.body.imagePath,
-		isDefault: req.user.role === ROLES.MASTER && req.body.isDefault
+		isDefault: Boolean(req.user.role === ROLES.MASTER && req.body.isDefault)
 	});
 	newProduct
 		.save()
@@ -87,7 +140,7 @@ router.patch(
 			req.body.description,
 			req.body.category,
 			req.body.imagePath,
-			req.user.role === ROLES.MASTER && req.body.isDefault
+			Boolean(req.user.role === ROLES.MASTER && req.body.isDefault)
 		];
 		if (!name || !price || !category) return res.sendStatus(400);
 
@@ -156,7 +209,10 @@ function verifyProductsSyntax(req, res, next) {
 	const products = req.body.products;
 	if (
 		products == null ||
-		(products.length > 0 && (!products[0].product || !products[0].amount))
+		(products.length > 0 &&
+			(!products[0].product ||
+				typeof products[0].product !== 'string' ||
+				!products[0].amount))
 	)
 		return res.sendStatus(400);
 

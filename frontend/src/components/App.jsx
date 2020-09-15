@@ -7,6 +7,7 @@ import AdminPage from './adminStatsPage/AdminPage';
 import LoginPage from './loginPage/LoginPage';
 import CheckoutPage from './checkoutPage/CheckoutPage';
 import ProductDetails from './productDetailsPage/ProductPage';
+import BecomeAdminPage from './adminStatsPage/BecomeAdminPage';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setRole, setCart } from '../redux/reduxActions';
@@ -102,7 +103,14 @@ function App() {
 				<AuthRoute path="/cart" component={CheckoutPage} />
 				<AdminRoute path="/admin" component={AdminPage} />
 				<AuthRoute path="/product" component={ProductDetails} />
-				<h1>Page not found: Error 404</h1>
+				<AuthRoute path="/become-admin" component={BecomeAdminPage} />
+				<Route
+					component={() => (
+						<h1 className="absolute-center">
+							Page not found: Error 404
+						</h1>
+					)}
+				/>
 			</Switch>
 		</Router>
 	);

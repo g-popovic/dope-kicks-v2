@@ -60,7 +60,7 @@ function AdminPage() {
 	}, [willUpdateCharts]);
 
 	return stats === 'loading' ? (
-		<h1>Loading...</h1>
+		<h1 className="absolute-center">Loading...</h1>
 	) : (
 		<>
 			<Navbar />

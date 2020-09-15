@@ -5,6 +5,7 @@ import LoginBackground from '../../images/Nike Sneakers Background.jpg';
 import { useDispatch } from 'react-redux';
 import { setRole } from '../../redux/reduxActions';
 import axiosApp from '../../utils/axiosConfig';
+import axios from 'axios';
 import { backend } from '../../utils/endpoints';
 import { ROLES } from '../../utils/data';
 
@@ -18,13 +19,7 @@ function LoginPage() {
 	const [password, setPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
 
-	async function authWithGoogle() {
-		try {
-			await axiosApp.get('/auth/google');
-		} catch (err) {
-			console.log(err);
-		}
-	}
+	// const source = axios.CancelToken.source();
 
 	async function login(e) {
 		e.preventDefault();
@@ -49,14 +44,13 @@ function LoginPage() {
 
 			dispatch(setRole(result.data.role));
 		} catch (err) {
+			setBtnLoading(false);
 			if (err.response && err.response.status === 401) {
 				setErrorMessage(err.response.data);
 			} else {
 				setErrorMessage('Something went wrong.');
 			}
 		}
-
-		setBtnLoading(false);
 	}
 
 	async function register(e) {
@@ -82,9 +76,10 @@ function LoginPage() {
 				email,
 				password
 			};
-			const result = await axiosApp.post('/auth/register', data);
+			await axiosApp.post('/auth/register', data);
 			dispatch(setRole(ROLES.BASIC));
 		} catch (err) {
+			setBtnLoading(false);
 			if (err.response && err.response.status === 403) {
 				setErrorMessage(err.response.data);
 			} else {
@@ -92,8 +87,6 @@ function LoginPage() {
 			}
 			console.log(err);
 		}
-
-		setBtnLoading(false);
 	}
 
 	function toggleAuthType() {
@@ -158,10 +151,7 @@ function LoginPage() {
 						<span>OR</span>
 					</div>
 
-					<a
-						href={`${backend}/auth/google`}
-						className="google"
-						onClick={authWithGoogle}>
+					<a href={`${backend}/auth/google`} className="google">
 						<img alt="google-icon" src={GoogleLogo} />
 						<span>Continue with Google</span>
 					</a>

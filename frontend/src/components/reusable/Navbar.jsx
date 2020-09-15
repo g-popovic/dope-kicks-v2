@@ -6,11 +6,13 @@ import NewProductIcon from '../../images/add_business-white-18dp.svg';
 import Burger from '../../images/menu-24px.svg';
 import ChartIcon from '../../images/insert_chart-white-18dp.svg';
 import CloseIcon from '../../images/close-24px.svg';
+import UpgrateToAdminIcon from '../../images/how_to_reg-white-18dp.svg';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleNavOpen, toggleEditPanel, setRole } from '../../redux/reduxActions';
 import axiosApp from '../../utils/axiosConfig';
 import { Link } from 'react-router-dom';
+import { ROLES } from '../../utils/data';
 
 function Navbar() {
 	const isOpen = useSelector(state => state.isNavOpen);
@@ -88,7 +90,19 @@ function NavItems(props) {
 					<p className="hide-mobile">Home</p>
 				</Link>
 			</li>
-			{props.userRole === 'admin' || props.userRole === 'master' ? (
+
+			{props.userRole === ROLES.BASIC ? (
+				<li>
+					<Link to="/become-admin">
+						<img
+							className="hide-desktop"
+							alt="become admin"
+							src={UpgrateToAdminIcon}
+						/>
+						<p className="hide-mobile">Become Admin</p>
+					</Link>
+				</li>
+			) : (
 				<>
 					<li onClick={props.toggleNewProduct}>
 						<img
@@ -109,7 +123,7 @@ function NavItems(props) {
 						</Link>
 					</li>
 				</>
-			) : null}
+			)}
 			<li>
 				<Link to="/cart">
 					<Cart amount={props.cartCount} />

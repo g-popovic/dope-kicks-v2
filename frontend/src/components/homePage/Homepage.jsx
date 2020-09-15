@@ -29,6 +29,7 @@ function Homepage() {
 	for (let i = 0; i < totalPages; i++) {
 		pages.push(
 			<li
+				key={i}
 				onClick={() => setPageFilter(i + 1)}
 				className={page === i + 1 ? 'active-page' : ''}>
 				<a>{i + 1}</a>

@@ -61,6 +61,15 @@ input:focus {
   color: #4b4b4b;
 }
 
+.absolute-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translateX(-50%) translateY(-100%);
+          transform: translateX(-50%) translateY(-100%);
+  text-align: center !important;
+}
+
 * {
   font-family: 'Roboto', sans-serif;
   color: #333333;
@@ -939,6 +948,18 @@ nav {
   -webkit-box-ordinal-group: 2;
       -ms-flex-order: 1;
           order: 1;
+}
+
+.become-admin-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-top: 40vh;
 }
 
 @media only screen and (min-width: 1000px) {

@@ -50,7 +50,7 @@ function CheckoutPage() {
 			<EditProductPanel />
 			<div className="checkout-page-container">
 				{cart.length === 0 ? (
-					<h1>Your cart is empty.</h1>
+					<h1 className="absolute-center">Your cart is empty.</h1>
 				) : (
 					<>
 						<h1>My Cart</h1>

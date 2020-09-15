@@ -54,6 +54,17 @@
 	order: 1;
 }
 
+.become-admin-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: white;
+	box-sizing: border-box;
+	padding-top: 40vh;
+}
+
 @media only screen and (min-width: 1000px) {
 	.admin-page-container {
 		flex-direction: row;

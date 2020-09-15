@@ -9,7 +9,7 @@ export function AuthRoute(props) {
 	const Component = props.component;
 
 	return userRole === 'loading' ? (
-		<h1>Loading...</h1>
+		<LoadingText />
 	) : userRole ? (
 		<Component />
 	) : (
@@ -22,7 +22,7 @@ export function UnauthRoute(props) {
 	const Component = props.component;
 
 	return userRole === 'loading' ? (
-		<h1>Loading...</h1>
+		<LoadingText />
 	) : !userRole ? (
 		<Component />
 	) : (
@@ -35,7 +35,7 @@ export function AdminRoute(props) {
 	const Component = props.component;
 
 	return userRole === 'loading' ? (
-		<h1>Loading...</h1>
+		<LoadingText />
 	) : userRole ? (
 		userRole === ROLES.ADMIN || userRole === ROLES.MASTER ? (
 			<Component />
@@ -45,4 +45,8 @@ export function AdminRoute(props) {
 	) : (
 		<Redirect to={{ pathname: '/login' }} />
 	);
+}
+
+function LoadingText() {
+	return <h1 className="absolute-center">Loading...</h1>;
 }

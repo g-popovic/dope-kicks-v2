@@ -3,6 +3,7 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
 const { authUser } = require('../authMiddleware');
+const { ROLES } = require('../config/data');
 
 router.get(
 	'/google',
@@ -65,6 +66,12 @@ router.get('/status', authUser, (req, res) => {
 		role: req.user.role
 	};
 	res.send(data);
+});
+
+router.post('/become-admin', authUser, (req, res) => {
+	User.findByIdAndUpdate(req.user.id, { role: ROLES.ADMIN })
+		.then(() => res.send('Upgraded to admin.'))
+		.catch(e => res.send(e));
 });
 
 module.exports = router;

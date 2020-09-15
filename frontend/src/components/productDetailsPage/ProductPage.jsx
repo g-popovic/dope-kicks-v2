@@ -53,7 +53,7 @@ function ProductPage() {
 						src={product.imagePath}
 						alt="product"
 						onError={e =>
-							(e.target.src = require('../../images/default_image.png'))
+							(e.target.src = require('../../images/product-placeholder.jpg'))
 						}
 					/>
 				</div>

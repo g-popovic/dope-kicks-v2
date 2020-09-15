@@ -67,7 +67,7 @@ function Homepage() {
 	async function getProducts(token) {
 		setIsLoading(true);
 
-		const itemsPerPage = 4;
+		const itemsPerPage = 8;
 
 		try {
 			const result = await axiosApp.get(

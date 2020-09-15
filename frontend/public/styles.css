@@ -213,6 +213,7 @@ nav {
 .nav-logo {
   font-family: 'Days One', sans-serif;
   color: white;
+  text-decoration: none;
 }
 
 .menu-button {
@@ -1070,7 +1071,7 @@ nav {
 
 .product-page-price {
   font-size: 1.3rem;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: underline;
   margin: 0 0 3rem;
 }
@@ -1081,7 +1082,7 @@ nav {
 }
 
 .product-page-category span {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 .product-page-description {
@@ -1091,27 +1092,29 @@ nav {
 
 @media only screen and (min-width: 1000px) {
   .product-page-container {
-    padding: 8rem 10%;
+    padding: 10rem 10%;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     height: 100vh;
-    -ms-flex-pack: distribute;
-        justify-content: space-around;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start;
     overflow: hidden;
   }
   .product-page-container .product-img-container {
-    padding-top: 40%;
-    -ms-flex-preferred-size: 40%;
-        flex-basis: 40%;
+    padding-top: 30rem;
+    width: 30rem;
     height: 0;
+    margin-right: 5rem;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
   }
   .product-details-container {
-    -ms-flex-preferred-size: 50%;
-        flex-basis: 50%;
+    max-width: 40rem;
     margin: 0;
   }
   .product-details-container .product-buttons-container {
@@ -1123,7 +1126,7 @@ nav {
     font-size: 3rem;
   }
   .product-page-price {
-    font-size: 2.1rem;
+    font-size: 1.5rem;
     margin-bottom: 3rem;
   }
   .product-page-description {

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Product(props) {
 	function setImgToDefault(e) {
-		e.target.src = require('../../images/default_image.png');
+		e.target.src = require('../../images/product-placeholder.jpg');
 	}
 
 	return (

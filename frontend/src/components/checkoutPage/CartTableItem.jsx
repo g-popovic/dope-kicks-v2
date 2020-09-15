@@ -1,6 +1,6 @@
 import React from 'react';
 import DeleteIcon from '../../images/delete-24px.svg';
-import DefaultImage from '../../images/default_image.png';
+import DefaultImage from '../../images/product-placeholder.jpg';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCart, changeAmount } from '../../redux/reduxActions';
 

@@ -31,7 +31,7 @@ function EditProductPanel() {
 	}, [editPanelState]);
 
 	function setImgToDefault(e) {
-		e.target.src = require('../../images/default_image.png');
+		e.target.src = require('../../images/product-placeholder.jpg');
 	}
 
 	async function createProduct(e) {

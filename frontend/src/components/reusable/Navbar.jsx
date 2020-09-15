@@ -32,7 +32,9 @@ function Navbar() {
 
 	return (
 		<nav>
-			<p className="nav-logo">AMAZOON</p>
+			<Link to="/" className="nav-logo">
+				AMAZOON
+			</Link>
 			<span>
 				<button className="menu-button  hide-desktop">
 					<img

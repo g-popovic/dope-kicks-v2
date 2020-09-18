@@ -57,7 +57,7 @@ function Homepage() {
 			setQueries({
 				query,
 				minPrice,
-				maxPrice,
+				maxPrice: maxPrice || undefined,
 				category,
 				page
 			})

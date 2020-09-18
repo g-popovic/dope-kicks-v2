@@ -102,6 +102,13 @@ function CheckoutPage() {
 								stripeKey={publicStripeToken}
 								token={purchase}
 								name="Dope Kicks">
+								<p>
+									Use{' '}
+									<span style="font-weight: 700;">
+										4242 4242 4242
+									</span>
+									for Card number
+								</p>
 								<button
 									className={
 										'paypal-button btn-primary' +

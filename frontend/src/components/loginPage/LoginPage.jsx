@@ -101,7 +101,7 @@ function LoginPage() {
 		<>
 			<div className="login-page-container">
 				<div className="login-content-container">
-					<h2 className="amazoon-logo">AMAZOON</h2>
+					<h2 className="amazoon-logo">DOPE KICKS</h2>
 					<h1>{isRegister ? 'CREATE AN ACCOUNT' : 'SIGN IN USING:'}</h1>
 					<form onSubmit={isRegister ? register : login}>
 						{isRegister ? (

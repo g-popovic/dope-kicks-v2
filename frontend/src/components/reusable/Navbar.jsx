@@ -33,7 +33,7 @@ function Navbar() {
 	return (
 		<nav>
 			<Link to="/" className="nav-logo">
-				AMAZOON
+				DOPE KICKS
 			</Link>
 			<span>
 				<button className="menu-button  hide-desktop">

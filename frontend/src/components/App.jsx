@@ -18,6 +18,7 @@ function App() {
 	const dispatch = useDispatch();
 	const cart = useSelector(state => state.cart);
 	const editPanelState = useSelector(state => state.editPanelState);
+	const userRole = useSelector(state => state.userRole);
 
 	useEffect(() => {
 		const source = axios.CancelToken.source();
@@ -34,6 +35,16 @@ function App() {
 			}
 		}
 
+		checkStatus();
+
+		return () => {
+			source.cancel();
+		};
+	}, []);
+
+	useEffect(() => {
+		const source = axios.CancelToken.source();
+
 		async function fetchCart() {
 			try {
 				const result = await axiosApp.get('/products/cart', {
@@ -46,13 +57,12 @@ function App() {
 			}
 		}
 
-		checkStatus();
-		fetchCart();
+		userRole != null && fetchCart();
 
 		return () => {
-			source.cancel();
+			source.cancel;
 		};
-	}, []);
+	}, [userRole]);
 
 	useEffect(() => {
 		const source = axios.CancelToken.source();

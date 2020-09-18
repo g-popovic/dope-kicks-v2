@@ -56,7 +56,7 @@ app.use('/products', productRoutes);
 app.use('/auth', authRoutes);
 app.use('/admin', adminStatsRoutes);
 
-// Serve static files
+// Serve static files when in production
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static('frontend/build'));
 

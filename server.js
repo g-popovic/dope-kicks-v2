@@ -7,6 +7,7 @@ const passport = require('passport');
 const cors = require('cors');
 const flash = require('connect-flash');
 const path = require('path');
+const MemoryStore = require('memorystore')(session);
 
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
@@ -15,6 +16,8 @@ require('./config/passportSetup');
 
 const app = express();
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 // Set up middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -22,8 +25,8 @@ app.use(
 	cors({
 		credentials: true,
 		origin:
-			process.env.NODE_ENV === 'production'
-				? 'http://dope-kicks.xyz'
+			isProduction
+				? 'https://dope-kicks.xyz'
 				: 'http://localhost:3000'
 	})
 );
@@ -32,11 +35,17 @@ app.use(
 		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: false,
+		proxy: isProduction,
+		store: new MemoryStore({
+			checkPeriod: 30 * 24 * 60 * 60 * 1000
+		}),
 		cookie: {
-			maxAge: 30 * 24 * 60 * 60 * 1000
+			maxAge: 30 * 24 * 60 * 60 * 1000,
+			httpOnly: false,
+			secure: isProduction
 		}
 	})
-);
+); 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -57,7 +66,7 @@ app.use('/auth', authRoutes);
 app.use('/admin', adminStatsRoutes);
 
 // Serve static files when in production
-if (process.env.NODE_ENV === 'production') {
+if (isProduction) {
 	app.use(express.static('frontend/build'));
 
 	app.get('*', (req, res) => {

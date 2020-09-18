@@ -21,6 +21,7 @@
 		"express-session": "^1.17.1",
 		"http-proxy-middleware": "^1.0.5",
 		"lodash": "^4.17.20",
+		"memorystore": "^1.6.2",
 		"moment": "^2.27.0",
 		"mongoose": "^5.10.0",
 		"passport": "^0.4.1",

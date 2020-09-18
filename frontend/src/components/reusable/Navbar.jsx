@@ -24,7 +24,7 @@ function Navbar() {
 		try {
 			await axiosApp.post('/auth/logout');
 
-			dispatch(setRole(null));
+			window.location.reload();
 		} catch (e) {
 			console.log(e);
 		}

@@ -101,7 +101,7 @@ function CheckoutPage() {
 							<StripeCheckout
 								stripeKey={publicStripeToken}
 								token={purchase}
-								name="Amazoon">
+								name="Dope Kicks">
 								<button
 									className={
 										'paypal-button btn-primary' +

@@ -57,7 +57,7 @@ function Homepage() {
 			setQueries({
 				query,
 				minPrice,
-				maxPrice: maxPrice || undefined,
+				maxPrice: maxPrice || 0,
 				category,
 				page
 			})
@@ -71,7 +71,7 @@ function Homepage() {
 
 		try {
 			const result = await axiosApp.get(
-				`/products/?itemsPerPage=${itemsPerPage}&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}&category=${category}&page=${page}`,
+				`/products/?itemsPerPage=${itemsPerPage}&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice || ''}&category=${category}&page=${page}`,
 				{
 					cancelToken: token
 				}

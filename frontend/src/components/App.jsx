@@ -60,7 +60,7 @@ function App() {
 		userRole != null && fetchCart();
 
 		return () => {
-			source.cancel;
+			source.cancel();
 		};
 	}, [userRole]);
 

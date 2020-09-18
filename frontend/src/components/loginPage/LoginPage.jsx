@@ -42,7 +42,7 @@ function LoginPage() {
 			await axiosApp.post('/auth/login', data);
 			const result = await axiosApp.get('/auth/status');
 
-			dispatch(setRole(result.data.role));
+			window.location.reload();
 		} catch (err) {
 			setBtnLoading(false);
 			if (err.response && err.response.status === 401) {
@@ -77,7 +77,7 @@ function LoginPage() {
 				password
 			};
 			await axiosApp.post('/auth/register', data);
-			dispatch(setRole(ROLES.BASIC));
+			window.location.reload();
 		} catch (err) {
 			setBtnLoading(false);
 			if (err.response && err.response.status === 403) {

@@ -1,2 +1,4 @@
-export const frontend = 'http://localhost:3000';
-export const backend = 'http://localhost:5000';
+export const backend =
+	process.env.NODE_ENV === 'production'
+		? 'http://dope-kicks.xyz'
+		: 'http://localhost:5000';

@@ -6,6 +6,7 @@ const session = require('express-session');
 const passport = require('passport');
 const cors = require('cors');
 const flash = require('connect-flash');
+const path = require('path');
 
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
@@ -22,7 +23,7 @@ app.use(
 		credentials: true,
 		origin:
 			process.env.NODE_ENV === 'production'
-				? process.env.FRONTEND_URL
+				? 'http://dope-kicks.xyz'
 				: 'http://localhost:3000'
 	})
 );
@@ -54,6 +55,15 @@ mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
 app.use('/products', productRoutes);
 app.use('/auth', authRoutes);
 app.use('/admin', adminStatsRoutes);
+
+// Serve static files
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('frontend/build'));
+
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+	});
+}
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

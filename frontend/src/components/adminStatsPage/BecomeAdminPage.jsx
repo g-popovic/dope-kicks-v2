@@ -28,7 +28,7 @@ export default function BecomeAdminPage() {
 				<h1>Do you want to upgrade to Admin status?</h1>
 				<p>
 					This will allow you to create new products, edit existing ones
-					and the analytics page
+					and the dashboard page
 				</p>
 				<br />
 				<br />

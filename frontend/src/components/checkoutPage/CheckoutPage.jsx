@@ -107,7 +107,7 @@ function CheckoutPage() {
 										'paypal-button btn-primary' +
 										(isLoading ? ' btn-primary-loading' : '')
 									}>
-									PURCHASE NOW
+									{isLoading ? 'PLEASE WAIT' : 'PURCHASE NOW'}
 								</button>
 							</StripeCheckout>
 						</div>

@@ -13,7 +13,7 @@ router.get(
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
 	res.redirect(
 		process.env.NODE_ENV === 'production'
-			? process.env.FRONTEND_URL
+			? 'http://dope-kicks.xyz'
 			: 'http://localhost:3000'
 	);
 });

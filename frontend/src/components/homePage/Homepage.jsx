@@ -195,6 +195,15 @@ function Homepage() {
 						Next
 					</a>
 				</div>
+				<p
+					style={{
+						color: '#999999',
+						maxWidth: '80vw',
+						margin: '2rem auto 1rem'
+					}}>
+					No copyright infringement intended. All images used belong to
+					their respective owners. This is just a hobby project.
+				</p>
 			</div>
 		</>
 	);

@@ -104,8 +104,8 @@ function CheckoutPage() {
 								name="Dope Kicks">
 								<p>
 									Use{' '}
-									<span style={{fontWeight: 700}}>
-										4242
+									<span style={{ fontWeight: 700 }}>
+										4242 42...
 									</span>{' '}
 									for Card number
 								</p>

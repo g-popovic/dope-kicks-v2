@@ -49,6 +49,7 @@ router.post('/purchase', authUser, verifyProductsSyntax, async (req, res) => {
 		dbProducts = await Product.find({
 			_id: { $in: products.map(item => item.product) }
 		});
+		if (dbProducts.length !== products.length) return res.send(400);
 	} catch (e) {
 		return res.send(e);
 	}
@@ -84,18 +85,6 @@ router.post('/purchase', authUser, verifyProductsSyntax, async (req, res) => {
 				})
 				.catch(err => res.send(err));
 		})
-		.catch(err => res.send(err));
-
-	// Create order
-});
-
-router.post('/test-purchase', authUser, verifyProductsSyntax, (req, res) => {
-	new Order({
-		products: req.body.products,
-		buyerId: req.user.id
-	})
-		.save()
-		.then(() => res.send('Transaction successful.'))
 		.catch(err => res.send(err));
 });
 
@@ -165,14 +154,20 @@ router.delete(
 	async (req, res) => {
 		const productId = req.product.id;
 
-		// Remove product from database
-		await Product.findByIdAndDelete(productId);
-
 		// Remove product id from all previous orders containing it
 		await Order.updateMany(
 			{ 'products.product': productId },
 			{ $pull: { products: { product: productId } } }
 		);
+
+		await User.updateMany(
+			{ 'cart.product': productId },
+			{ $pull: { cart: { product: productId } } }
+		);
+
+		// Remove product from database
+		await Product.findByIdAndDelete(productId);
+
 		res.send('Successfully deleted product.');
 	}
 );

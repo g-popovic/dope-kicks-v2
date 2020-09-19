@@ -43,6 +43,8 @@ function Homepage() {
 			return;
 		}
 
+		if (editPanelState !== false) return;
+
 		const source = axios.CancelToken.source();
 
 		getProducts(source.token);
@@ -71,7 +73,9 @@ function Homepage() {
 
 		try {
 			const result = await axiosApp.get(
-				`/products/?itemsPerPage=${itemsPerPage}&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice || ''}&category=${category}&page=${page}`,
+				`/products/?itemsPerPage=${itemsPerPage}&query=${query}&minPrice=${minPrice}&maxPrice=${
+					maxPrice || ''
+				}&category=${category}&page=${page}`,
 				{
 					cancelToken: token
 				}

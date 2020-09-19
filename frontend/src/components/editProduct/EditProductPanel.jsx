@@ -3,7 +3,7 @@ import LabeledInput from '../reusable/LabeledInput';
 import CloseIcon from '../../images/close_black-24px.svg';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleEditPanel } from '../../redux/reduxActions';
+import { toggleEditPanel, setCart } from '../../redux/reduxActions';
 import axiosApp from '../../utils/axiosConfig';
 import { ROLES, CATEGORIES } from '../../utils/data';
 
@@ -69,6 +69,7 @@ function EditProductPanel() {
 			};
 			await axiosApp.patch(`/products/${editPanelState._id}`, data);
 
+			dispatch(setCart((await axiosApp.get('/products/cart')).data));
 			dispatch(toggleEditPanel());
 		} catch (err) {
 			console.log(err);
@@ -80,6 +81,7 @@ function EditProductPanel() {
 	async function deleteProduct() {
 		try {
 			await axiosApp.delete(`/products/${editPanelState._id}`);
+			dispatch(setCart((await axiosApp.get('/products/cart')).data));
 			dispatch(toggleEditPanel());
 		} catch (e) {
 			console.log(e);

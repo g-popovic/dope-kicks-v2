@@ -38,11 +38,12 @@ function Homepage() {
 	}
 
 	useEffect(() => {
-		if (preventFirstRender && products !== 'loading') {
+		if (products === 'loading') {
+			setPreventFirstRender(false);
+		} else if (preventFirstRender) {
 			setPreventFirstRender(false);
 			return;
 		}
-
 		if (editPanelState !== false) return;
 
 		const source = axios.CancelToken.source();

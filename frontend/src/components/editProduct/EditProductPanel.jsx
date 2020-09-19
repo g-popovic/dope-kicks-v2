@@ -44,7 +44,8 @@ function EditProductPanel() {
 				price,
 				description,
 				imagePath,
-				category
+				category,
+				isDefault
 			};
 			await axiosApp.post('/products/new-product', data);
 			dispatch(toggleEditPanel());
@@ -65,7 +66,8 @@ function EditProductPanel() {
 				price,
 				description,
 				imagePath,
-				category
+				category,
+				isDefault
 			};
 			await axiosApp.patch(`/products/${editPanelState._id}`, data);
 

@@ -24,10 +24,7 @@ app.use(bodyParser.json());
 app.use(
 	cors({
 		credentials: true,
-		origin:
-			isProduction
-				? 'https://dope-kicks.xyz'
-				: 'http://localhost:3000'
+		origin: isProduction ? 'https://dope-kicks.xyz' : 'http://localhost:3000'
 	})
 );
 app.use(
@@ -37,7 +34,7 @@ app.use(
 		saveUninitialized: false,
 		proxy: isProduction,
 		store: new MemoryStore({
-			checkPeriod: 30 * 24 * 60 * 60 * 1000
+			checkPeriod: 10 * 60 * 1000
 		}),
 		cookie: {
 			maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -45,7 +42,7 @@ app.use(
 			secure: isProduction
 		}
 	})
-); 
+);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());

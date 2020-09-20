@@ -38,6 +38,12 @@ function Homepage() {
 	}
 
 	useEffect(() => {
+		if (preventFirstRender) return;
+
+		setPage(1);
+	}, [category, minPrice, maxPrice]);
+
+	useEffect(() => {
 		if (products === 'loading') {
 			setPreventFirstRender(false);
 		} else if (preventFirstRender) {
@@ -48,7 +54,7 @@ function Homepage() {
 
 		const source = axios.CancelToken.source();
 
-		getProducts(source.token, false);
+		getProducts(source.token);
 
 		return () => source.cancel();
 	}, [editPanelState, page, category, minPrice, maxPrice]);
@@ -65,11 +71,10 @@ function Homepage() {
 		);
 	}, [query, minPrice, maxPrice, category, page]);
 
-	async function getProducts(token, newSearch) {
+	async function getProducts(token) {
 		setIsLoading(true);
 
 		const itemsPerPage = 8;
-		if (newSearch) setPage(1);
 
 		try {
 			const result = await axiosApp.get(
@@ -103,7 +108,8 @@ function Homepage() {
 				<form
 					onSubmit={e => {
 						e.preventDefault();
-						getProducts(null, true);
+						setPage(1);
+						getProducts(null);
 					}}>
 					<div className="search-filters">
 						<div className="search">

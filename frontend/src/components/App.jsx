@@ -101,7 +101,7 @@ function App() {
 				<UnauthRoute path="/login" component={LoginPage} />
 				<AuthRoute exact path="/" component={Homepage} />
 				<AuthRoute path="/cart" component={CheckoutPage} />
-				<AdminRoute path="/admin" component={AdminPage} />
+				<AdminRoute path="/dashboard" component={AdminPage} />
 				<AuthRoute path="/product" component={ProductDetails} />
 				<AuthRoute path="/become-admin" component={BecomeAdminPage} />
 				<Route

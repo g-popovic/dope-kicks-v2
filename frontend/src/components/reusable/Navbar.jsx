@@ -115,7 +115,7 @@ function NavItems(props) {
 						<p className="hide-mobile">Add Product</p>
 					</li>
 					<li>
-						<Link to="/admin">
+						<Link to="/dashboard">
 							<img
 								className="hide-desktop"
 								alt="store"

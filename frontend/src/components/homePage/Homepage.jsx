@@ -51,7 +51,7 @@ function Homepage() {
 		getProducts(source.token, false);
 
 		return () => source.cancel();
-	}, [editPanelState, page]);
+	}, [editPanelState, page, category, minPrice, maxPrice]);
 
 	useEffect(() => {
 		dispatch(
@@ -64,14 +64,6 @@ function Homepage() {
 			})
 		);
 	}, [query, minPrice, maxPrice, category, page]);
-
-	useEffect(() => {
-		const source = axios.CancelToken.source();
-
-		getProducts(source.token, true);
-
-		return () => source.cancel();
-	}, [category, minPrice, maxPrice]);
 
 	async function getProducts(token, newSearch) {
 		setIsLoading(true);

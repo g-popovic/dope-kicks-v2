@@ -11,7 +11,7 @@ export default function BecomeAdminPage() {
 
 		try {
 			await axiosApp.post('/auth/become-admin');
-			window.location.pathname = '/admin';
+			window.location.pathname = '/dashboard';
 		} catch (err) {
 			console.log(err);
 			alert('Something went wrong');

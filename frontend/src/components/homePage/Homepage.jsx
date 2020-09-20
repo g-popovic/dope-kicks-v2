@@ -48,11 +48,9 @@ function Homepage() {
 
 		const source = axios.CancelToken.source();
 
-		getProducts(source.token);
+		getProducts(source.token, false);
 
-		return () => {
-			source.cancel();
-		};
+		return () => source.cancel();
 	}, [editPanelState, page]);
 
 	useEffect(() => {
@@ -67,10 +65,19 @@ function Homepage() {
 		);
 	}, [query, minPrice, maxPrice, category, page]);
 
-	async function getProducts(token) {
+	useEffect(() => {
+		const source = axios.CancelToken.source();
+
+		getProducts(source.token, true);
+
+		return () => source.cancel();
+	}, [category, minPrice, maxPrice]);
+
+	async function getProducts(token, newSearch) {
 		setIsLoading(true);
 
 		const itemsPerPage = 8;
+		if (newSearch) setPage(1);
 
 		try {
 			const result = await axiosApp.get(
@@ -83,11 +90,13 @@ function Homepage() {
 			);
 
 			dispatch(setProducts(result.data));
+			setIsLoading(false);
 		} catch (err) {
 			console.log(err);
+			if (!axios.isCancel(err)) {
+				setIsLoading(false);
+			} else console.log(err);
 		}
-
-		setIsLoading(false);
 	}
 
 	function setPageFilter(value) {
@@ -102,7 +111,7 @@ function Homepage() {
 				<form
 					onSubmit={e => {
 						e.preventDefault();
-						getProducts();
+						getProducts(null, true);
 					}}>
 					<div className="search-filters">
 						<div className="search">

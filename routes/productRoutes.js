@@ -29,6 +29,7 @@ router.get('/', async (req, res) => {
 	};
 
 	result.results = await Product.find(dbQuery)
+		.sort({ _id: -1 })
 		.limit(itemsPerPage)
 		.skip(startIndex)
 		.exec();

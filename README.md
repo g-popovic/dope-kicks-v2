@@ -1,4 +1,4 @@
-# Dope Kicks (Ecommerce Website)
+# Dope Kicks (Ecommerce MERN App)
 ### <a href="https://dope-kicks.xyz">View Project</a>
 
 

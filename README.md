@@ -10,6 +10,6 @@ An online sneaker store. Users can sign up with email or use Google Oauth. Users
 * Node.js & Express.js
 * MongoDB
 * React.js & Redux
-* Passport.js
+* Passport.js for Google OAuth
 * Stripe Payment
 * AWS EC2
